@@ -1,0 +1,237 @@
+<!-- ===== HERO ===== -->
+<section class="hero">
+
+  <!-- Slides de fond -->
+  @for (slide of slides; track $index) {
+    <div
+      class="hero__slide"
+      [class.actif]="slideActif === $index"
+      [style.background-image]="'url(' + slide.url + ')'">
+    </div>
+  }
+  <div class="hero__overlay"></div>
+
+  <!-- Indicateurs -->
+  <div class="hero__dots">
+    @for (slide of slides; track $index) {
+      <button
+        class="hero__dot-btn"
+        [class.actif]="slideActif === $index"
+        (click)="allerSlide($index)">
+      </button>
+    }
+  </div>
+
+  <div class="container hero__contenu">
+
+    <div class="hero__localisation">
+      <span class="hero__dot"></span>
+      Côte d'Ivoire
+    </div>
+
+    <h1 class="hero__titre">
+      Investissez dans<br>
+      <em>l'Abidjan de demain</em>
+    </h1>
+
+    <p class="hero__accroche">
+      Un domaine de 20 hectares. 3 quartiers résidentiels. 400 maisons modernes
+      à vendre ou à louer. Accessibles depuis n'importe où dans le monde.
+    </p>
+
+    <div class="hero__actions">
+      <a routerLink="/acheter-louer" class="hero__btn-primary">
+        Explorer les biens
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a routerLink="/projet" class="hero__btn-ghost">
+        Découvrir le projet
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== CHIFFRES ===== -->
+<section class="chiffres-section">
+  <div class="container">
+    <div class="chiffres-grille">
+      @for (item of chiffres; track item.label) {
+        <div class="chiffre">
+          <div class="chiffre__ligne">
+            <span class="chiffre__valeur">{{ item.valeur }}<span class="chiffre__unite">{{ item.unite }}</span></span>
+            <span class="chiffre__label">{{ item.label }}</span>
+          </div>
+          <div class="chiffre__detail">{{ item.detail }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRÉSENTATION ===== -->
+<section class="section presentation">
+  <div class="container">
+    <div class="presentation__grille">
+
+      <div class="presentation__visuel">
+        <div class="visuel-principal">
+          <img
+            src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80"
+            alt="Résidences modernes">
+        </div>
+        <div class="visuel-accent"></div>
+      </div>
+
+      <div class="presentation__texte">
+        <div class="etiquette">Vision du projet</div>
+        <h2 class="titre-section">Un programme immobilier <br>d'exception</h2>
+        <p class="texte-corps">
+          Ce programme immobilier prend forme sur un domaine de <strong>20 hectares</strong>
+          au cœur d'Abidjan. 400 résidences modernes, réparties en trois quartiers distincts,
+          pensées pour offrir un cadre de vie de qualité.
+        </p>
+        <p class="texte-corps">
+          Chaque quartier bénéficie d'espaces verts, d'infrastructures soignées et
+          d'une architecture contemporaine. Les biens sont proposés à <strong>l'achat</strong>
+          comme à la <strong>location</strong>.
+        </p>
+        <a routerLink="/projet" class="lien-cta">
+          En savoir plus
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ATOUTS ===== -->
+<section class="section section-fond atouts">
+  <div class="container">
+    <div class="atouts__entete">
+      <div class="etiquette">Pourquoi investir</div>
+      <h2 class="titre-section">Trois raisons de nous faire confiance</h2>
+    </div>
+    <div class="atouts__grille">
+      @for (item of atouts; track item.tag) {
+        <div class="atout-card">
+          <div class="atout-card__icone">
+            @if (item.icone === 'location') {
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            }
+            @if (item.icone === 'home') {
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            }
+            @if (item.icone === 'shield') {
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            }
+          </div>
+          <div class="atout-card__tag">{{ item.tag }}</div>
+          <h3 class="atout-card__titre">{{ item.titre }}</h3>
+          <p class="atout-card__texte">{{ item.texte }}</p>
+          <div class="atout-card__stat">
+            <span class="atout-card__stat-valeur">{{ item.stat }}</span>
+            <span class="atout-card__stat-label">{{ item.statLabel }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIASPORA ===== -->
+<section class="section diaspora">
+  <div class="container diaspora__inner">
+
+    <div class="diaspora__texte">
+      <div class="etiquette etiquette--clair">Résider ou investir</div>
+      <h2 class="titre-section titre-section--clair">
+        Un projet immobilier<br>pour vivre, louer ou investir
+      </h2>
+      <p class="texte-corps texte-corps--clair">
+        Pensé pour les familles, les actifs et les investisseurs, le programme réunit des
+        résidences modernes dans un cadre maîtrisé à Abidjan. Vous bénéficiez d'une offre claire,
+        adaptée à l'achat comme à la location, avec un accompagnement pour comparer les biens et
+        avancer avec visibilité.
+      </p>
+      <ul class="diaspora__liste">
+        <li>
+          <span class="diaspora__check">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Programme résidentiel de 20 hectares avec maisons à vendre et à louer
+        </li>
+        <li>
+          <span class="diaspora__check">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Trois quartiers conçus pour concilier confort, calme et accessibilité
+        </li>
+        <li>
+          <span class="diaspora__check">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Biens titrés, informations vérifiables et présentation transparente
+        </li>
+        <li>
+          <span class="diaspora__check">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          Conseillers disponibles pour orienter votre choix et organiser une visite
+        </li>
+      </ul>
+      <div class="diaspora__preuves">
+        <div>
+          <strong>400</strong>
+          <span>résidences modernes dans le programme</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>quartiers résidentiels complémentaires</span>
+        </div>
+      </div>
+      <div class="diaspora__cta">
+        <a routerLink="/projet" class="hero__btn-primary">
+          Découvrir le projet
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="diaspora__etapes">
+      <div class="diaspora__etapes-titre">Un projet pour plusieurs besoins</div>
+      <div class="etape">
+        <div class="etape__num">01</div>
+        <div class="etape__icone">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="etape__corps">
+          <div class="etape__titre">Habiter à Abidjan</div>
+          <div class="etape__texte">Choisissez une résidence moderne dans un environnement pensé pour le confort quotidien.</div>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape__num">02</div>
+        <div class="etape__icone">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="etape__corps">
+          <div class="etape__titre">Investir dans la pierre</div>
+          <div class="etape__texte">Constituez un patrimoine immobilier avec un bien destiné à l'usage personnel ou à la location.</div>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape__num">03</div>
+        <div class="etape__icone">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="etape__corps">
+          <div class="etape__titre">Préparer l'avenir</div>
+          <div class="etape__texte">Sécurisez un point d'ancrage pour votre famille, aujourd'hui ou pour un projet futur.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,145 @@
+<!-- HEADER PAGE -->
+<section class="page-header">
+  <div class="container">
+    <span class="badge">Parlons de votre projet</span>
+    <h1 class="page-header__titre">Nous contacter</h1>
+    <p class="page-header__sous-titre">
+      Une question, un projet d'investissement ? Notre équipe vous répond dans les plus brefs délais.
+    </p>
+  </div>
+</section>
+
+<!-- CONTENU -->
+<section class="section">
+  <div class="container contact__inner">
+
+    <!-- INFOS -->
+    <div class="contact__infos">
+      <h2 class="contact__infos-titre">Informations</h2>
+
+      <div class="info-card">
+        <span class="info-card__icone">📍</span>
+        <div>
+          <strong>Localisation</strong>
+          <p>Abidjan, Côte d'Ivoire</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <span class="info-card__icone">✉️</span>
+        <div>
+          <strong>Email</strong>
+          <p>contact&#64;immoabidjan.com</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <span class="info-card__icone">⏱️</span>
+        <div>
+          <strong>Délai de réponse</strong>
+          <p>Sous 48h ouvrées</p>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <span class="info-card__icone">🌍</span>
+        <div>
+          <strong>Diaspora bienvenue</strong>
+          <p>Nous répondons aux investisseurs du monde entier</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <div class="contact__form-wrap">
+
+      @if (envoi === 'succes') {
+        <div class="alerte alerte--succes">
+          ✅ Votre message a bien été envoyé ! Nous vous répondrons sous 48h.
+        </div>
+      }
+
+      @if (envoi === 'erreur') {
+        <div class="alerte alerte--erreur">
+          ❌ Une erreur est survenue. Veuillez réessayer ou nous contacter par email.
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="soumettre()" class="form">
+
+        <div class="form__ligne">
+          <div class="form__groupe" [class.erreur]="estInvalide('nom')">
+            <label>Nom *</label>
+            <input type="text" formControlName="nom" placeholder="Votre nom">
+            @if (estInvalide('nom')) {
+              <span class="form__erreur">Le nom est requis</span>
+            }
+          </div>
+          <div class="form__groupe" [class.erreur]="estInvalide('prenom')">
+            <label>Prénom *</label>
+            <input type="text" formControlName="prenom" placeholder="Votre prénom">
+            @if (estInvalide('prenom')) {
+              <span class="form__erreur">Le prénom est requis</span>
+            }
+          </div>
+        </div>
+
+        <div class="form__ligne">
+          <div class="form__groupe" [class.erreur]="estInvalide('email')">
+            <label>Email *</label>
+            <input type="email" formControlName="email" placeholder="votre&#64;email.com">
+            @if (estInvalide('email')) {
+              <span class="form__erreur">Email invalide</span>
+            }
+          </div>
+          <div class="form__groupe">
+            <label>Téléphone</label>
+            <input type="tel" formControlName="telephone" placeholder="+33 6 00 00 00 00">
+          </div>
+        </div>
+
+        <div class="form__ligne">
+          <div class="form__groupe" [class.erreur]="estInvalide('paysResidence')">
+            <label>Pays de résidence *</label>
+            <input type="text" formControlName="paysResidence" placeholder="France, Canada...">
+            @if (estInvalide('paysResidence')) {
+              <span class="form__erreur">Le pays est requis</span>
+            }
+          </div>
+          <div class="form__groupe" [class.erreur]="estInvalide('sujet')">
+            <label>Sujet *</label>
+            <select formControlName="sujet">
+              <option value="">Choisir un sujet</option>
+              <option value="achat">Achat d'un bien</option>
+              <option value="location">Location d'un bien</option>
+              <option value="investissement">Investissement</option>
+              <option value="information">Demande d'information</option>
+              <option value="autre">Autre</option>
+            </select>
+            @if (estInvalide('sujet')) {
+              <span class="form__erreur">Veuillez choisir un sujet</span>
+            }
+          </div>
+        </div>
+
+        <div class="form__groupe" [class.erreur]="estInvalide('message')">
+          <label>Message *</label>
+          <textarea formControlName="message" rows="5" placeholder="Décrivez votre projet ou votre question..."></textarea>
+          @if (estInvalide('message')) {
+            <span class="form__erreur">Message trop court (20 caractères minimum)</span>
+          }
+        </div>
+
+        <button type="submit" class="btn-primary form__submit" [disabled]="envoi === 'loading'">
+          @if (envoi === 'loading') {
+            Envoi en cours...
+          } @else {
+            Envoyer le message ✉️
+          }
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</section>

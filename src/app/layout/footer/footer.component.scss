@@ -1,0 +1,133 @@
+.footer {
+  background: linear-gradient(160deg, #08172D 0%, #0A1F3D 58%, #0C2E23 100%);
+  color: rgba(255, 255, 255, 0.85);
+  padding-top: 72px;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) 0.8fr 1fr;
+    gap: 64px;
+    padding-bottom: 56px;
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.2rem;
+    color: var(--blanc);
+    margin-bottom: 18px;
+
+    strong {
+      color: var(--vert-clair);
+    }
+  }
+
+  &__logo-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(92, 196, 142, 0.12);
+    border: 1px solid rgba(92, 196, 142, 0.28);
+    color: var(--vert-clair);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  &__desc {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.68);
+    max-width: 520px;
+  }
+
+  &__titre {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--blanc);
+    margin-bottom: 22px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  &__liens {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    li a {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.62);
+      transition: var(--transition);
+
+      &:hover {
+        color: var(--vert-clair);
+      }
+    }
+  }
+
+  &__infos {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    span {
+      display: block;
+      font-size: 0.72rem;
+      color: rgba(92, 196, 142, 0.72);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      margin-bottom: 3px;
+    }
+  }
+
+  &__cta {
+    display: inline-flex;
+    margin-top: 24px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    background: rgba(92, 196, 142, 0.12);
+    border: 1px solid rgba(92, 196, 142, 0.3);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transition);
+
+    &:hover {
+      background: var(--vert);
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 18px 0;
+
+    .container {
+      text-align: center;
+    }
+
+    p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+}

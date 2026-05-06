@@ -1,0 +1,46 @@
+<nav class="navbar" [class.scrolled]="scrolled">
+  <div class="container navbar__inner">
+
+    <a routerLink="/" class="navbar__logo" (click)="fermerMenu()">
+      <span class="logo-icon">🏡</span>
+      <span class="logo-texte">
+        <strong>Immo</strong> Abidjan
+      </span>
+    </a>
+
+    <ul class="navbar__liens" [class.ouvert]="menuOuvert">
+      <li>
+        <a routerLink="/" routerLinkActive="actif" [routerLinkActiveOptions]="{exact: true}" (click)="fermerMenu()">
+          Accueil
+        </a>
+      </li>
+      <li>
+        <a routerLink="/projet" routerLinkActive="actif" (click)="fermerMenu()">
+          Notre Projet
+        </a>
+      </li>
+      <li>
+        <a routerLink="/acheter-louer" routerLinkActive="actif" (click)="fermerMenu()">
+          Acheter / Louer
+        </a>
+      </li>
+      <li>
+        <a routerLink="/blog" routerLinkActive="actif" (click)="fermerMenu()">
+          Blog
+        </a>
+      </li>
+      <li class="navbar__cta">
+        <a routerLink="/contact" class="btn-primary" (click)="fermerMenu()">
+          Nous contacter
+        </a>
+      </li>
+    </ul>
+
+    <button class="navbar__hamburger" (click)="toggleMenu()" [class.ouvert]="menuOuvert" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</nav>
