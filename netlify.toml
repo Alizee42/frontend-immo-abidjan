@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build:ssr"
+  publish = "dist/frontend-immo-abidjan/browser"
+
+[[plugins]]
+  package = "@netlify/angular-runtime"
