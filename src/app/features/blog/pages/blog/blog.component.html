@@ -1,1 +1,150 @@
-<p>blog works!</p>
+<!-- HEADER -->
+<section class="page-header">
+  <div class="container">
+    <span class="badge">Actualités &amp; Conseils</span>
+    <h1 class="page-header__titre">Le Blog ImmoAbidjan</h1>
+    <p class="page-header__sous-titre">
+      Conseils immobiliers, tendances du marché d'Abidjan et guides pour investir sereinement.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Chargement -->
+    @if (chargement) {
+      <div class="etat-message">
+        <div class="spinner"></div>
+        <p>Chargement des articles...</p>
+      </div>
+    }
+
+    <!-- Erreur -->
+    @if (!chargement && erreur) {
+      <div class="etat-message etat-message--erreur">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>Impossible de charger les articles. Vérifiez que le serveur est actif.</p>
+      </div>
+    }
+
+    <!-- Vide -->
+    @if (!chargement && !erreur && articles.length === 0) {
+      <div class="etat-message">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <p>Aucun article publié pour le moment.</p>
+        <p class="etat-message__hint">Revenez bientôt !</p>
+      </div>
+    }
+
+    <!-- Articles -->
+    @if (!chargement && !erreur && articles.length > 0) {
+
+      <!-- Article mis en avant -->
+      @if (articles[0]; as une) {
+        <div class="article-une">
+          <div class="article-une__image">
+            @if (une.imageUrl) {
+              <img [src]="une.imageUrl" [alt]="une.titre">
+            } @else {
+              <div class="image-placeholder"></div>
+            }
+          </div>
+          <div class="article-une__corps">
+            <div class="article-une__meta">
+              @if (une.tags && une.tags.length > 0) {
+                <span class="tag">{{ une.tags[0] }}</span>
+              }
+              <span class="date">{{ une.publishedAt | date:'d MMMM yyyy':'':'fr' }}</span>
+            </div>
+            <h2 class="article-une__titre">{{ une.titre }}</h2>
+            <p class="article-une__resume">{{ une.resume }}</p>
+            <div class="article-une__pied">
+              @if (une.auteur) {
+                <span class="auteur">Par {{ une.auteur }}</span>
+              }
+              <button class="btn-lire" (click)="lireArticle(une)">Lire l'article</button>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Reste des articles -->
+      @if (articles.length > 1) {
+        <div class="articles-grille">
+          @for (article of articles | slice:1; track article.id) {
+            <article class="article-card">
+              <div class="article-card__image">
+                @if (article.imageUrl) {
+                  <img [src]="article.imageUrl" [alt]="article.titre">
+                } @else {
+                  <div class="image-placeholder"></div>
+                }
+              </div>
+              <div class="article-card__corps">
+                <div class="article-card__meta">
+                  @if (article.tags && article.tags.length > 0) {
+                    <span class="tag">{{ article.tags[0] }}</span>
+                  }
+                  <span class="date">{{ article.publishedAt | date:'d MMM yyyy':'':'fr' }}</span>
+                </div>
+                <h3 class="article-card__titre">{{ article.titre }}</h3>
+                <p class="article-card__resume">{{ article.resume | slice:0:120 }}{{ article.resume.length > 120 ? '...' : '' }}</p>
+                <div class="article-card__pied">
+                  @if (article.auteur) {
+                    <span class="auteur">{{ article.auteur }}</span>
+                  }
+                  <button class="lien-lire" (click)="lireArticle(article)">
+                    Lire
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    }
+
+  </div>
+</section>
+
+<!-- MODAL ARTICLE -->
+@if (articleOuvert) {
+  <div class="modal-overlay" (click)="fermerArticle()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <button class="modal__fermer" (click)="fermerArticle()" aria-label="Fermer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      @if (articleOuvert.imageUrl) {
+        <img class="modal__image" [src]="articleOuvert.imageUrl" [alt]="articleOuvert.titre">
+      }
+      <div class="modal__corps">
+        <div class="modal__meta">
+          @if (articleOuvert.tags) {
+            @for (tag of articleOuvert.tags; track tag) {
+              <span class="tag">{{ tag }}</span>
+            }
+          }
+          <span class="date">{{ articleOuvert.publishedAt | date:'d MMMM yyyy':'':'fr' }}</span>
+        </div>
+        <h2 class="modal__titre">{{ articleOuvert.titre }}</h2>
+        @if (articleOuvert.auteur) {
+          <p class="modal__auteur">Par {{ articleOuvert.auteur }}</p>
+        }
+        <div class="modal__contenu" [innerHTML]="articleOuvert.contenu"></div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container cta-section__inner">
+    <div>
+      <h2>Un projet immobilier en tête ?</h2>
+      <p>Notre équipe est disponible pour répondre à toutes vos questions.</p>
+    </div>
+    <a routerLink="/contact" class="btn-primary">Nous contacter</a>
+  </div>
+</section>
