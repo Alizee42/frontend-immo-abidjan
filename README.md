@@ -1,59 +1,58 @@
-# Frontend Immo Abidjan
+# ImmoAbidjan — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+Application web Angular SSR (Server-Side Rendering) pour une plateforme immobilière ciblant Abidjan, Côte d'Ivoire. Permet aux visiteurs de parcourir les annonces de vente et de location, de lire des articles de blog et de contacter l'agence.
 
-## Development server
+## Stack technique
 
-To start a local development server, run:
+| Technologie | Version |
+|---|---|
+| Angular | 19.2 |
+| Angular SSR (`@angular/ssr`) | 19.2.19 |
+| Express (serveur SSR) | 4.18 |
+| TypeScript | 5.7 |
+| RxJS | 7.8 |
+| Netlify Angular runtime | 3.0 |
+| Angular CLI | 19.2.19 |
+
+## Prérequis
+
+- Node.js 18+
+- Angular CLI 19 (`npm install -g @angular/cli@19`)
+- Backend `backend-immo-abidjan` démarré sur `localhost:8081`
+
+## Installation et lancement
 
 ```bash
+npm install
+
+# Serveur de développement
 ng serve
-```
+# Application disponible sur http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+# Build de production (SSR)
 ng build
+node dist/frontend-immo-abidjan/server/server.mjs
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Pages
 
-## Running unit tests
+| Route | Description |
+|---|---|
+| `/` | Page d'accueil |
+| `/acheter-louer` | Liste des biens avec filtres (type, quartier, statut) |
+| `/blog` | Articles de blog |
+| `/contact` | Formulaire de contact |
+| `/projet` | Présentation du projet immobilier |
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Fonctionnalités
 
-```bash
-ng test
-```
+- Filtrage des biens par type (`VENTE` / `LOCATION`), quartier et statut (`DISPONIBLE` / `RESERVE` / `VENDU`)
+- Composants Angular standalone chargés en lazy-loading
+- SSR avec Node.js / Express pour l'indexation SEO
+- Déploiement Netlify via `@netlify/angular-runtime`
 
-## Running end-to-end tests
+## Services principaux
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `PropertyService` — récupère et filtre les biens
+- `BlogService` — récupère les articles de blog
+- `ContactService` — envoie les formulaires de contact
