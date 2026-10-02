@@ -113,13 +113,27 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 18px 0;
 
-    .container {
-      text-align: center;
-    }
-
     p {
       font-size: 0.85rem;
       color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &__bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  &__admin {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.25);
+    transition: var(--transition);
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.55);
     }
   }
 }

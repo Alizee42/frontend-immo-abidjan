@@ -143,6 +143,24 @@
       background: rgba(46, 139, 87, 0.85);
       color: #fff;
     }
+
+    &.badge-location_vente {
+      background: rgba(111, 66, 140, 0.85);
+      color: #fff;
+    }
+  }
+
+  &__avancement {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    &.avancement-en_travaux { background: rgba(184,134,11,0.9); color: #fff; }
+    &.avancement-prevu { background: rgba(255,255,255,0.92); color: #333; }
   }
 
   &__status {

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PropertyService } from '../../../../core/services/property.service';
-import { Property, PropertyType, PropertyStatus, Quartier } from '../../../../core/models/property.model';
+import { Avancement, Categorie, LABELS_AVANCEMENT, LABELS_CATEGORIE, LABELS_TYPE, Property, PropertyType, PropertyStatus, Quartier } from '../../../../core/models/property.model';
+import { SeoService } from '../../../../core/services/seo.service';
 
 @Component({
   selector: 'app-properties',
@@ -13,6 +14,7 @@ import { Property, PropertyType, PropertyStatus, Quartier } from '../../../../co
 })
 export class PropertiesComponent implements OnInit {
   private service = inject(PropertyService);
+  private seo = inject(SeoService);
 
   biens: Property[] = [];
   chargement = true;
@@ -21,8 +23,18 @@ export class PropertiesComponent implements OnInit {
   filtreType: PropertyType | '' = '';
   filtreQuartier: Quartier | '' = '';
   filtreStatus: PropertyStatus | '' = '';
+  filtreCategorie: Categorie | '' = '';
+  filtreAvancement: Avancement | '' = '';
+
+  labelsType = LABELS_TYPE;
+  labelsCategorie = LABELS_CATEGORIE;
+  labelsAvancement = LABELS_AVANCEMENT;
 
   ngOnInit() {
+    this.seo.definir({
+      titre: 'Acheter ou louer',
+      description: 'Terrains viabilisés et maisons clés en main à Songon Agban, en vente, location ou location-vente : filtrez par quartier SOBE, avancement et disponibilité.',
+    });
     this.charger();
   }
 
@@ -33,6 +45,8 @@ export class PropertiesComponent implements OnInit {
       type: this.filtreType || undefined,
       quartier: this.filtreQuartier || undefined,
       status: this.filtreStatus || undefined,
+      categorie: this.filtreCategorie || undefined,
+      avancement: this.filtreAvancement || undefined,
     };
     this.service.getAll(filtres).subscribe({
       next: (data) => {
@@ -50,14 +64,16 @@ export class PropertiesComponent implements OnInit {
     this.filtreType = '';
     this.filtreQuartier = '';
     this.filtreStatus = '';
+    this.filtreCategorie = '';
+    this.filtreAvancement = '';
     this.charger();
   }
 
   labelQuartier(q: Quartier): string {
     const map: Record<Quartier, string> = {
-      QUARTIER_1: 'Quartier Nord',
-      QUARTIER_2: 'Quartier Centre',
-      QUARTIER_3: 'Quartier Sud',
+      QUARTIER_1: 'SOBE 1',
+      QUARTIER_2: 'SOBE 2',
+      QUARTIER_3: 'SOBE 3',
     };
     return map[q] ?? q;
   }

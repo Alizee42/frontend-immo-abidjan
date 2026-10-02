@@ -1,0 +1,78 @@
+<div class="page-entete">
+  <div>
+    <h1>{{ articleId ? 'Modifier l\'article' : 'Ajouter un article' }}</h1>
+    <p>Seuls les articles « Publié » apparaissent sur la page Blog.</p>
+  </div>
+  <a routerLink="/admin/articles" class="btn-action btn-action--ghost">Retour à la liste</a>
+</div>
+
+@if (chargement) {
+  <p class="etat">Chargement...</p>
+} @else {
+
+  <form class="form-carte" [formGroup]="form" (ngSubmit)="soumettre()">
+
+    @if (erreur) {
+      <div class="etat etat--erreur" style="margin-bottom: 18px;">{{ erreur }}</div>
+    }
+
+    <div class="form-champ">
+      <label for="titre">Titre</label>
+      <input id="titre" type="text" formControlName="titre" placeholder="Ex: Investir dans l'immobilier à Abidjan en 2026">
+    </div>
+
+    <div class="form-champ">
+      <label for="resume">Résumé</label>
+      <textarea id="resume" formControlName="resume" placeholder="Résumé affiché dans la liste des articles..."></textarea>
+    </div>
+
+    <div class="form-champ">
+      <label for="contenu">Contenu</label>
+      <textarea id="contenu" formControlName="contenu" style="min-height: 220px;" placeholder="Contenu complet de l'article (HTML simple accepté : <p>, <strong>...)"></textarea>
+    </div>
+
+    <div class="form-ligne">
+      <div class="form-champ">
+        <label for="auteur">Auteur</label>
+        <input id="auteur" type="text" formControlName="auteur" placeholder="Équipe SCI-AGD">
+      </div>
+
+      <div class="form-champ">
+        <label for="tagsTexte">Tags (séparés par des virgules)</label>
+        <input id="tagsTexte" type="text" formControlName="tagsTexte" placeholder="Investissement, Conseils">
+      </div>
+    </div>
+
+    <div class="form-champ">
+      <label>Image de couverture</label>
+
+      @if (imageUrl) {
+        <div class="photo-item">
+          <img [src]="imageUrl" alt="Image de couverture">
+          <button type="button" class="photo-item__retirer" (click)="retirerImage()" aria-label="Retirer l'image">×</button>
+        </div>
+      } @else {
+        <label class="upload-zone">
+          <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onFichierChoisi($event)" [disabled]="uploadEnCours">
+          <span>{{ uploadEnCours ? 'Envoi en cours...' : '+ Ajouter une image' }}</span>
+        </label>
+      }
+
+      @if (erreurUpload) {
+        <span class="etat etat--erreur">{{ erreurUpload }}</span>
+      }
+    </div>
+
+    <label class="form-champ form-champ--checkbox">
+      <input type="checkbox" formControlName="publie">
+      <span>Publier cet article sur le site</span>
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-action" [disabled]="enregistrement">
+        {{ enregistrement ? 'Enregistrement...' : (articleId ? 'Enregistrer les modifications' : 'Créer l\'article') }}
+      </button>
+      <a routerLink="/admin/articles" class="btn-action btn-action--ghost">Annuler</a>
+    </div>
+  </form>
+}

@@ -18,7 +18,7 @@ Application web Angular SSR (Server-Side Rendering) pour une plateforme immobili
 
 - Node.js 18+
 - Angular CLI 19 (`npm install -g @angular/cli@19`)
-- Backend `backend-immo-abidjan` démarré sur `localhost:8081`
+- Backend `backend-immo-abidjan` démarré sur `localhost:8082`
 
 ## Installation et lancement
 

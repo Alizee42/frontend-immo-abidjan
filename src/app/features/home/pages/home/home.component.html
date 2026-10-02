@@ -1,7 +1,6 @@
 <!-- ===== HERO ===== -->
 <section class="hero">
 
-  <!-- Slides de fond -->
   @for (slide of slides; track $index) {
     <div
       class="hero__slide"
@@ -11,227 +10,166 @@
   }
   <div class="hero__overlay"></div>
 
-  <!-- Indicateurs -->
   <div class="hero__dots">
     @for (slide of slides; track $index) {
       <button
         class="hero__dot-btn"
         [class.actif]="slideActif === $index"
-        (click)="allerSlide($index)">
+        (click)="allerSlide($index)"
+        aria-label="Changer d'image">
       </button>
     }
   </div>
 
   <div class="container hero__contenu">
-
-    <div class="hero__localisation">
+    <div class="hero__eyebrow">
       <span class="hero__dot"></span>
-      Côte d'Ivoire
+      Songon Agban · Côte d'Ivoire
     </div>
 
     <h1 class="hero__titre">
-      Investissez dans<br>
-      <em>l'Abidjan de demain</em>
+      Un domaine familial.<br>
+      <em>Une vision pour Abidjan.</em>
     </h1>
 
     <p class="hero__accroche">
-      Un domaine de 20 hectares. 3 quartiers résidentiels. 400 maisons modernes
-      à vendre ou à louer. Accessibles depuis n'importe où dans le monde.
+      Sur son domaine familial de Songon Agban, la SCI-AGD développe un programme résidentiel
+      de plus de 400 logements — pensé pour durer, ouvert à l'achat comme à la location.
     </p>
 
     <div class="hero__actions">
       <a routerLink="/acheter-louer" class="hero__btn-primary">
-        Explorer les biens
+        Explorer les résidences
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a routerLink="/projet" class="hero__btn-ghost">
-        Découvrir le projet
+      <a routerLink="/vision" class="hero__btn-ghost">
+        Notre vision
       </a>
     </div>
+  </div>
 
+  <div class="hero__scroll">
+    <span>Le domaine</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
   </div>
 </section>
 
 <!-- ===== CHIFFRES ===== -->
 <section class="chiffres-section">
-  <div class="container">
-    <div class="chiffres-grille">
-      @for (item of chiffres; track item.label) {
-        <div class="chiffre">
-          <div class="chiffre__ligne">
-            <span class="chiffre__valeur">{{ item.valeur }}<span class="chiffre__unite">{{ item.unite }}</span></span>
-            <span class="chiffre__label">{{ item.label }}</span>
-          </div>
-          <div class="chiffre__detail">{{ item.detail }}</div>
-        </div>
-      }
-    </div>
-  </div>
-</section>
-
-<!-- ===== PRÉSENTATION ===== -->
-<section class="section presentation">
-  <div class="container">
-    <div class="presentation__grille">
-
-      <div class="presentation__visuel">
-        <div class="visuel-principal">
-          <img
-            src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80"
-            alt="Résidences modernes">
-        </div>
-        <div class="visuel-accent"></div>
+  <div class="container chiffres-grille">
+    @for (item of chiffres; track item.label) {
+      <div class="chiffre">
+        <div class="chiffre__valeur">{{ item.valeur }}<span class="chiffre__unite">{{ item.unite }}</span></div>
+        <div class="chiffre__label">{{ item.label }}</div>
+        <div class="chiffre__detail">{{ item.detail }}</div>
       </div>
+    }
+  </div>
+</section>
 
-      <div class="presentation__texte">
-        <div class="etiquette">Vision du projet</div>
-        <h2 class="titre-section">Un programme immobilier <br>d'exception</h2>
-        <p class="texte-corps">
-          Ce programme immobilier prend forme sur un domaine de <strong>20 hectares</strong>
-          au cœur d'Abidjan. 400 résidences modernes, réparties en trois quartiers distincts,
-          pensées pour offrir un cadre de vie de qualité.
-        </p>
-        <p class="texte-corps">
-          Chaque quartier bénéficie d'espaces verts, d'infrastructures soignées et
-          d'une architecture contemporaine. Les biens sont proposés à <strong>l'achat</strong>
-          comme à la <strong>location</strong>.
-        </p>
-        <a routerLink="/projet" class="lien-cta">
-          En savoir plus
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+<!-- ===== CHAPITRE 01 — LE FONCIER ===== -->
+<section class="chapitre">
+  <div class="container chapitre__grille">
+    <div class="chapitre__visuel">
+      <img
+        src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1000&q=80"
+        alt="Le domaine de Songon">
+      <div class="chapitre__legende">124 ha couverts par un ACD</div>
+    </div>
+
+    <div class="chapitre__texte">
+      <div class="chapitre__repere">
+        <span class="chapitre__numero">01</span>
+        <span class="chapitre__trait"></span>
+        <span class="chapitre__nom">Le domaine</span>
       </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ===== ATOUTS ===== -->
-<section class="section section-fond atouts">
-  <div class="container">
-    <div class="atouts__entete">
-      <div class="etiquette">Pourquoi investir</div>
-      <h2 class="titre-section">Trois raisons de nous faire confiance</h2>
-    </div>
-    <div class="atouts__grille">
-      @for (item of atouts; track item.tag) {
-        <div class="atout-card">
-          <div class="atout-card__icone">
-            @if (item.icone === 'location') {
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            }
-            @if (item.icone === 'home') {
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            }
-            @if (item.icone === 'shield') {
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            }
-          </div>
-          <div class="atout-card__tag">{{ item.tag }}</div>
-          <h3 class="atout-card__titre">{{ item.titre }}</h3>
-          <p class="atout-card__texte">{{ item.texte }}</p>
-          <div class="atout-card__stat">
-            <span class="atout-card__stat-valeur">{{ item.stat }}</span>
-            <span class="atout-card__stat-label">{{ item.statLabel }}</span>
-          </div>
-        </div>
-      }
-    </div>
-  </div>
-</section>
-
-<!-- ===== DIASPORA ===== -->
-<section class="section diaspora">
-  <div class="container diaspora__inner">
-
-    <div class="diaspora__texte">
-      <div class="etiquette etiquette--clair">Résider ou investir</div>
-      <h2 class="titre-section titre-section--clair">
-        Un projet immobilier<br>pour vivre, louer ou investir
-      </h2>
-      <p class="texte-corps texte-corps--clair">
-        Pensé pour les familles, les actifs et les investisseurs, le programme réunit des
-        résidences modernes dans un cadre maîtrisé à Abidjan. Vous bénéficiez d'une offre claire,
-        adaptée à l'achat comme à la location, avec un accompagnement pour comparer les biens et
-        avancer avec visibilité.
+      <h2 class="chapitre__titre">Un héritage foncier,<br>engagé avec mesure</h2>
+      <p class="chapitre__corps">
+        Le domaine de Songon appartient à la famille Atchan, originaire de Songon Agban.
+        Sur les <strong>124 hectares</strong> couverts par un ACD, la SCI-AGD n'a mobilisé que
+        <strong>20 hectares</strong> pour son programme immobilier actuel.
       </p>
-      <ul class="diaspora__liste">
-        <li>
-          <span class="diaspora__check">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </span>
-          Programme résidentiel de 20 hectares avec maisons à vendre et à louer
-        </li>
-        <li>
-          <span class="diaspora__check">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </span>
-          Trois quartiers conçus pour concilier confort, calme et accessibilité
-        </li>
-        <li>
-          <span class="diaspora__check">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </span>
-          Biens titrés, informations vérifiables et présentation transparente
-        </li>
-        <li>
-          <span class="diaspora__check">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          </span>
-          Conseillers disponibles pour orienter votre choix et organiser une visite
-        </li>
+      <p class="chapitre__corps">
+        Les <strong>104 hectares</strong> restants sont volontairement laissés en réserve foncière,
+        préservés juridiquement — une décision qui protège l'avenir de la famille plutôt que de
+        financer un projet limité.
+      </p>
+      <a routerLink="/vision" class="chapitre__lien">
+        Voir la répartition complète du domaine
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPITRE 02 — SOBE ===== -->
+<section class="chapitre chapitre--sombre">
+  <div class="container chapitre__grille chapitre__grille--inverse">
+    <div class="chapitre__texte">
+      <div class="chapitre__repere">
+        <span class="chapitre__numero">02</span>
+        <span class="chapitre__trait"></span>
+        <span class="chapitre__nom">SOBE 1 · 2 · 3</span>
+      </div>
+      <h2 class="chapitre__titre chapitre__titre--clair">Trois quartiers,<br>un même cœur résidentiel</h2>
+      <p class="chapitre__corps chapitre__corps--clair">
+        SOBE 1, 2 et 3 forment le programme résidentiel du domaine : plus de
+        <strong>400 logements</strong> sur 12 hectares, entre terrains viabilisés et maisons
+        clés en main.
+      </p>
+      <ul class="chapitre__liste">
+        <li>Vente, location et location-vente</li>
+        <li>Titres fonciers enregistrés</li>
+        <li>Accompagnement à distance pour la diaspora</li>
       </ul>
-      <div class="diaspora__preuves">
-        <div>
-          <strong>400</strong>
-          <span>résidences modernes dans le programme</span>
-        </div>
-        <div>
-          <strong>3</strong>
-          <span>quartiers résidentiels complémentaires</span>
-        </div>
-      </div>
-      <div class="diaspora__cta">
-        <a routerLink="/projet" class="hero__btn-primary">
-          Découvrir le projet
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
+      <a routerLink="/acheter-louer" class="chapitre__lien chapitre__lien--clair">
+        Voir les biens disponibles
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
     </div>
 
-    <div class="diaspora__etapes">
-      <div class="diaspora__etapes-titre">Un projet pour plusieurs besoins</div>
-      <div class="etape">
-        <div class="etape__num">01</div>
-        <div class="etape__icone">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </div>
-        <div class="etape__corps">
-          <div class="etape__titre">Habiter à Abidjan</div>
-          <div class="etape__texte">Choisissez une résidence moderne dans un environnement pensé pour le confort quotidien.</div>
-        </div>
-      </div>
-      <div class="etape">
-        <div class="etape__num">02</div>
-        <div class="etape__icone">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <div class="etape__corps">
-          <div class="etape__titre">Investir dans la pierre</div>
-          <div class="etape__texte">Constituez un patrimoine immobilier avec un bien destiné à l'usage personnel ou à la location.</div>
-        </div>
-      </div>
-      <div class="etape">
-        <div class="etape__num">03</div>
-        <div class="etape__icone">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
-        <div class="etape__corps">
-          <div class="etape__titre">Préparer l'avenir</div>
-          <div class="etape__texte">Sécurisez un point d'ancrage pour votre famille, aujourd'hui ou pour un projet futur.</div>
-        </div>
-      </div>
+    <div class="chapitre__visuel">
+      <img
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
+        alt="Résidences des quartiers SOBE">
+      <div class="chapitre__legende chapitre__legende--sombre">12 ha · 400+ logements</div>
     </div>
+  </div>
+</section>
 
+<!-- ===== MISSION ===== -->
+<section class="mission">
+  <div class="container">
+    <div class="mission__entete">
+      <span class="chapitre__nom">Notre mission</span>
+      <h2 class="mission__titre">Préserver, Construire, Loger</h2>
+    </div>
+    <div class="mission__grille">
+      @for (m of mission; track m.titre) {
+        <div class="mission-item">
+          <span class="mission-item__lettre">{{ m.lettre }}</span>
+          <h3>{{ m.titre }}</h3>
+          <p>{{ m.texte }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA DIASPORA ===== -->
+<section class="cta-final">
+  <div class="container cta-final__inner">
+    <h2 class="cta-final__titre">
+      Où que vous soyez,<br>
+      <em>votre place vous attend à Songon.</em>
+    </h2>
+    <p class="cta-final__texte">
+      Notre équipe accompagne les acquéreurs à distance — en France, au Canada ou ailleurs —
+      de la première question jusqu'à la signature.
+    </p>
+    <div class="cta-final__actions">
+      <a routerLink="/acheter-louer" class="hero__btn-primary">Explorer les résidences</a>
+      <a routerLink="/contact" class="hero__btn-ghost hero__btn-ghost--clair">Parler à un conseiller</a>
+    </div>
   </div>
 </section>

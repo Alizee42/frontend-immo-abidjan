@@ -1,0 +1,28 @@
+<div class="admin">
+  <aside class="admin__sidebar">
+    <div class="admin__logo">
+      <span>SCI-AGD</span>
+      <small>Administration</small>
+    </div>
+
+    <nav class="admin__nav">
+      <a routerLink="/admin" routerLinkActive="actif" [routerLinkActiveOptions]="{exact: true}">
+        Tableau de bord
+      </a>
+      <a routerLink="/admin/biens" routerLinkActive="actif">
+        Biens immobiliers
+      </a>
+      <a routerLink="/admin/articles" routerLinkActive="actif">
+        Articles du blog
+      </a>
+    </nav>
+
+    <button class="admin__deconnexion" (click)="deconnecter()">
+      Se déconnecter
+    </button>
+  </aside>
+
+  <main class="admin__contenu">
+    <router-outlet></router-outlet>
+  </main>
+</div>

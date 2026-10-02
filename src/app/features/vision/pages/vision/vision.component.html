@@ -1,0 +1,165 @@
+<!-- HEADER -->
+<section class="page-header">
+  <div class="container">
+    <span class="badge">SCI-AGD — Songon Agban</span>
+    <h1 class="page-header__titre">Notre Vision</h1>
+    <p class="page-header__sous-titre">
+      Préserver, Construire, Loger — la vision foncière et immobilière portée par la SCI-AGD sur le domaine de Songon.
+    </p>
+  </div>
+</section>
+
+<!-- FONCIER -->
+<section class="section">
+  <div class="container vision__inner">
+    <div class="vision__visuel">
+      <img
+        src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80"
+        alt="Vue du domaine de Songon">
+      <div class="vision__badge-flottant">
+        <strong>124 ha</strong>
+        <span>domaine total (ACD)</span>
+      </div>
+    </div>
+    <div class="vision__texte">
+      <span class="badge">Structure et foncier</span>
+      <h2 class="titre-section">Une vision immobilière familiale</h2>
+      <p class="texte-corps">
+        La SCI-AGD, fondée par trois frères Atchan originaires de Songon Agban, porte une vision
+        immobilière familiale autour d'une mission : <strong>Préserver, Construire, Loger</strong>.
+      </p>
+      <p class="texte-corps">
+        Le domaine de Songon représente <strong>124 hectares</strong> couverts par un ACD. Sur cette
+        surface, <strong>20 hectares</strong> sont aujourd'hui mobilisés pour le programme immobilier,
+        tandis que <strong>104 hectares</strong> restent en réserve foncière, préservée juridiquement et
+        distincte du programme engagé.
+      </p>
+      <div class="vision__stats">
+        @for (s of fonciers; track s.label) {
+          <div class="vision__stat">
+            <strong>{{ s.valeur }}</strong>
+            <span>{{ s.label }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REPARTITION DU PROGRAMME -->
+<section class="section section-fond">
+  <div class="container">
+    <div class="entete-centre">
+      <span class="badge">Répartition</span>
+      <h2 class="titre-section">Le programme de 20 hectares</h2>
+      <p class="sous-titre">
+        Le programme mobilisé se répartit entre quartiers résidentiels, projets futurs et réserve non affectée.
+      </p>
+    </div>
+    <div class="repartition__grille">
+      @for (r of repartition; track r.nom) {
+        <div class="repartition-card">
+          <div class="repartition-card__entete">
+            <h3 class="repartition-card__nom">{{ r.nom }}</h3>
+            <span class="repartition-card__surface">{{ r.surface }}</span>
+          </div>
+          <span class="statut-badge" [class]="'statut-badge--' + r.statut">{{ r.statutLabel }}</span>
+          <p class="repartition-card__desc">{{ r.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- SOBE -->
+<section class="section">
+  <div class="container">
+    <div class="entete-centre">
+      <span class="badge">Cœur résidentiel</span>
+      <h2 class="titre-section">SOBE 1, 2 et 3</h2>
+      <p class="sous-titre">
+        Les trois SOBE constituent le cœur résidentiel du programme, avec un potentiel de plus de 400 logements :
+        terrains viabilisés, maisons clés en main, vente, location et location-vente.
+      </p>
+    </div>
+    <div class="quartiers__grille">
+      @for (q of sobe; track q.nom) {
+        <div class="quartier-card" [style.--couleur]="q.couleur">
+          <div class="quartier-card__num">{{ q.num }}</div>
+          <h3 class="quartier-card__nom">{{ q.nom }}</h3>
+          <p class="quartier-card__desc">{{ q.description }}</p>
+          <p class="quartier-card__statut">{{ q.statut }}</p>
+        </div>
+      }
+    </div>
+    <p class="repartition__note">
+      Surfaces exactes, nombre de parcelles, typologies, statuts détaillés, calendriers et prix seront précisés
+      progressivement pour chaque quartier.
+    </p>
+  </div>
+</section>
+
+<!-- ATOUTS -->
+<section class="section section-fond">
+  <div class="container">
+    <div class="entete-centre">
+      <span class="badge">Pourquoi la SCI-AGD</span>
+      <h2 class="titre-section">Ce qui rend cette vision unique</h2>
+    </div>
+    <div class="atouts__grille">
+      @for (a of atouts; track a.titre) {
+        <div class="atout-item">
+          <div class="atout-item__icone" [innerHTML]="a.svg"></div>
+          <h4>{{ a.titre }}</h4>
+          <p>{{ a.texte }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS A VENIR -->
+<section class="section">
+  <div class="container">
+    <div class="entete-centre">
+      <span class="badge">Vision & projets à venir</span>
+      <h2 class="titre-section">Ce qui se prépare sur le domaine</h2>
+      <p class="sous-titre">
+        Ces projets font partie de la vision d'aménagement du domaine. Ils ne sont pas encore financés,
+        commercialisés ou construits — ils sont présentés ici à titre indicatif.
+      </p>
+    </div>
+    <div class="projets-futurs__grille">
+      <div class="projet-futur-card">
+        <span class="statut-badge statut-badge--etude">Projet à l'étude</span>
+        <h3>Centre commercial familial</h3>
+        <p>
+          Une parcelle de 3 hectares est réservée à un futur retail park de proximité : supermarché, boutiques,
+          restauration, loisirs familiaux et stationnements, développé progressivement.
+        </p>
+      </div>
+      <div class="projet-futur-card">
+        <span class="statut-badge statut-badge--etude">Concept à préciser</span>
+        <h3>Projet hôtelier de Songon</h3>
+        <p>
+          Une emprise de 3 000 m² est prévue pour un futur projet hôtelier à Songon. Positionnement, capacité,
+          prestations et calendrier restent à définir.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container cta-section__inner">
+    <div>
+      <h2>Prêt à investir ou à vous installer ?</h2>
+      <p>Notre équipe vous accompagne de la première question jusqu'à la signature.</p>
+    </div>
+    <div class="cta-section__actions">
+      <a routerLink="/acheter-louer" class="btn-primary">Voir les biens disponibles</a>
+      <a routerLink="/contact" class="btn-ghost">Contacter un conseiller</a>
+    </div>
+  </div>
+</section>

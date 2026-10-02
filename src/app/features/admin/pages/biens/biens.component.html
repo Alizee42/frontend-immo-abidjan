@@ -1,0 +1,62 @@
+<div class="page-entete">
+  <div>
+    <h1>Biens immobiliers</h1>
+    <p>Gérez les résidences affichées sur la page Acheter / Louer.</p>
+  </div>
+  <a routerLink="/admin/biens/nouveau" class="btn-action">+ Ajouter un bien</a>
+</div>
+
+@if (chargement) {
+  <p class="etat">Chargement...</p>
+}
+
+@if (!chargement && erreur) {
+  <p class="etat etat--erreur">Impossible de charger les biens.</p>
+}
+
+@if (!chargement && !erreur && biens.length === 0) {
+  <p class="etat">Aucun bien pour le moment.</p>
+}
+
+@if (!chargement && !erreur && biens.length > 0) {
+  <table class="table-liste">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Quartier</th>
+        <th>Type</th>
+        <th>Catégorie</th>
+        <th>Avancement</th>
+        <th>Statut</th>
+        <th>Prix</th>
+        <th>Photos</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (bien of biens; track bien.id) {
+        <tr>
+          <td>{{ bien.titre }}</td>
+          <td>{{ labelQuartier(bien.quartier) }}</td>
+          <td>{{ labelsType[bien.type] }}</td>
+          <td>{{ labelsCategorie[bien.categorie] }}</td>
+          <td>{{ labelsAvancement[bien.avancement] }}</td>
+          <td><span class="pill" [class]="pillStatus(bien.status)">{{ labelStatus(bien.status) }}</span></td>
+          <td>{{ formatPrix(bien.prix) }} FCFA</td>
+          <td>{{ bien.photos.length || 0 }}</td>
+          <td>
+            <div class="table-actions">
+              <a [routerLink]="['/admin/biens', bien.id]" class="btn-action btn-action--ghost">Modifier</a>
+              <button
+                class="btn-action btn-action--danger"
+                [disabled]="suppressionEnCours === bien.id"
+                (click)="supprimer(bien)">
+                {{ suppressionEnCours === bien.id ? '...' : 'Supprimer' }}
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

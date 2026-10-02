@@ -113,6 +113,83 @@
   }
 }
 
+// ===== REPARTITION =====
+.repartition__grille {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.repartition-card {
+  background: var(--blanc);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  &__nom {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bleu);
+  }
+
+  &__surface {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--vert);
+    flex-shrink: 0;
+  }
+
+  &__desc {
+    font-size: 0.85rem;
+    color: var(--texte-clair);
+    line-height: 1.6;
+  }
+}
+
+.repartition__note {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--texte-clair);
+  font-style: italic;
+}
+
+.statut-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  &--en-cours {
+    background: rgba(46, 139, 87, 0.12);
+    color: var(--vert);
+  }
+
+  &--etude {
+    background: rgba(184, 134, 11, 0.14);
+    color: #B8860B;
+  }
+
+  &--reserve {
+    background: rgba(26, 60, 110, 0.1);
+    color: var(--bleu);
+  }
+}
+
 // ===== QUARTIERS =====
 .quartiers__grille {
   display: grid;
@@ -175,6 +252,14 @@
       }
     }
   }
+
+  &__statut {
+    font-size: 0.85rem;
+    color: var(--texte-clair);
+    line-height: 1.6;
+    padding-top: 16px;
+    border-top: 1px solid var(--gris-bordure);
+  }
 }
 
 // ===== ATOUTS =====
@@ -216,6 +301,35 @@
 
   p {
     font-size: 0.88rem;
+    color: var(--texte-clair);
+    line-height: 1.7;
+  }
+}
+
+// ===== PROJETS FUTURS =====
+.projets-futurs__grille {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.projet-futur-card {
+  background: var(--gris-fond);
+  border: 1px dashed var(--gris-bordure);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bleu);
+  }
+
+  p {
+    font-size: 0.9rem;
     color: var(--texte-clair);
     line-height: 1.7;
   }
@@ -365,12 +479,15 @@
   .vision__inner { grid-template-columns: 1fr; }
   .vision__badge-flottant { bottom: 12px; right: 12px; }
   .vision__stats { grid-template-columns: repeat(2, 1fr); }
+  .repartition__grille { grid-template-columns: repeat(2, 1fr); }
   .quartiers__grille { grid-template-columns: 1fr; }
   .atouts__grille { grid-template-columns: repeat(2, 1fr); }
+  .projets-futurs__grille { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
   .page-header__titre { font-size: 2rem; }
+  .repartition__grille { grid-template-columns: 1fr; }
   .atouts__grille { grid-template-columns: 1fr; }
   .cta-section__inner { flex-direction: column; text-align: center; }
   .cta-section__actions { flex-direction: column; width: 100%; }

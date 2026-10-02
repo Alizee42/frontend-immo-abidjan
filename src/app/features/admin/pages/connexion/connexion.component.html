@@ -1,0 +1,27 @@
+<div class="connexion">
+  <form class="connexion__carte" [formGroup]="form" (ngSubmit)="soumettre()">
+    <div class="connexion__entete">
+      <span class="connexion__logo">SCI-AGD</span>
+      <h1>Espace administration</h1>
+      <p>Connectez-vous pour gérer les biens et les articles.</p>
+    </div>
+
+    @if (erreur) {
+      <div class="connexion__erreur">{{ erreur }}</div>
+    }
+
+    <label class="champ">
+      <span>Email</span>
+      <input type="email" formControlName="email" placeholder="vous&#64;exemple.com" autocomplete="username">
+    </label>
+
+    <label class="champ">
+      <span>Mot de passe</span>
+      <input type="password" formControlName="motDePasse" placeholder="••••••••" autocomplete="current-password">
+    </label>
+
+    <button type="submit" class="connexion__btn" [disabled]="chargement">
+      {{ chargement ? 'Connexion...' : 'Se connecter' }}
+    </button>
+  </form>
+</div>

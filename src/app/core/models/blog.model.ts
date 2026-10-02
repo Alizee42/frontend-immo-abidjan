@@ -7,4 +7,5 @@ export interface Article {
   auteur: string;
   publishedAt: string;
   tags: string[];
+  publie: boolean;
 }

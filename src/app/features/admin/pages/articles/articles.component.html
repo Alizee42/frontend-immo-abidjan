@@ -1,0 +1,56 @@
+<div class="page-entete">
+  <div>
+    <h1>Articles du blog</h1>
+    <p>Gérez les articles publiés sur la page Blog.</p>
+  </div>
+  <a routerLink="/admin/articles/nouveau" class="btn-action">+ Ajouter un article</a>
+</div>
+
+@if (chargement) {
+  <p class="etat">Chargement...</p>
+}
+
+@if (!chargement && erreur) {
+  <p class="etat etat--erreur">Impossible de charger les articles.</p>
+}
+
+@if (!chargement && !erreur && articles.length === 0) {
+  <p class="etat">Aucun article pour le moment.</p>
+}
+
+@if (!chargement && !erreur && articles.length > 0) {
+  <table class="table-liste">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Statut</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (article of articles; track article.id) {
+        <tr>
+          <td>{{ article.titre }}</td>
+          <td>{{ article.auteur || '—' }}</td>
+          <td>
+            <span class="pill" [class]="article.publie ? 'pill--vert' : 'pill--gris'">
+              {{ article.publie ? 'Publié' : 'Brouillon' }}
+            </span>
+          </td>
+          <td>
+            <div class="table-actions">
+              <a [routerLink]="['/admin/articles', article.id]" class="btn-action btn-action--ghost">Modifier</a>
+              <button
+                class="btn-action btn-action--danger"
+                [disabled]="suppressionEnCours === article.id"
+                (click)="supprimer(article)">
+                {{ suppressionEnCours === article.id ? '...' : 'Supprimer' }}
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

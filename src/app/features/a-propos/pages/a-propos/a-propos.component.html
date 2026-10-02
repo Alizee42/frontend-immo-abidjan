@@ -1,0 +1,70 @@
+<!-- HEADER -->
+<section class="page-header">
+  <div class="container">
+    <span class="badge">Notre histoire</span>
+    <h1 class="page-header__titre">À propos de la SCI-AGD</h1>
+    <p class="page-header__sous-titre">
+      Une entreprise familiale née à Songon Agban, portée par trois frères et une mission commune.
+    </p>
+  </div>
+</section>
+
+<!-- HISTOIRE -->
+<section class="section">
+  <div class="container histoire__inner">
+    <div class="histoire__texte">
+      <span class="badge">Origine</span>
+      <h2 class="titre-section">Une famille, une terre, un projet</h2>
+      <p class="texte-corps">
+        La SCI-AGD (Société Civile Immobilière) a été fondée par trois frères Atchan, originaires de
+        Songon Agban, en Côte d'Ivoire. Leur ambition commune est de transformer un héritage foncier familial
+        en un projet immobilier structuré, transparent et durable.
+      </p>
+      <p class="texte-corps">
+        Le domaine de Songon, dont ils sont issus, représente aujourd'hui 124 hectares couverts par un ACD.
+        Plutôt que d'engager l'intégralité de cette réserve foncière, la famille a choisi de mobiliser
+        progressivement une partie du domaine — 20 hectares à ce jour — pour un programme immobilier maîtrisé,
+        tout en préservant juridiquement le reste pour l'avenir.
+      </p>
+    </div>
+    <div class="histoire__visuel">
+      <img
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80"
+        alt="Domaine familial de Songon Agban">
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="section section-fond">
+  <div class="container">
+    <div class="entete-centre">
+      <span class="badge">Notre mission</span>
+      <h2 class="titre-section">Préserver, Construire, Loger</h2>
+      <p class="sous-titre">Trois principes qui guident chaque décision de la SCI-AGD.</p>
+    </div>
+    <div class="valeurs__grille">
+      @for (v of valeurs; track v.titre) {
+        <div class="valeur-item">
+          <div class="valeur-item__icone" [innerHTML]="v.svg"></div>
+          <h4>{{ v.titre }}</h4>
+          <p>{{ v.texte }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container cta-section__inner">
+    <div>
+      <h2>Découvrir la vision du domaine</h2>
+      <p>Le foncier, le programme immobilier et les projets à venir de la SCI-AGD.</p>
+    </div>
+    <div class="cta-section__actions">
+      <a routerLink="/vision" class="btn-primary">Voir notre vision</a>
+      <a routerLink="/contact" class="btn-ghost">Nous contacter</a>
+    </div>
+  </div>
+</section>

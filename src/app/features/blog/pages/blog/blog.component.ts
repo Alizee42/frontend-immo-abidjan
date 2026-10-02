@@ -1,8 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule, DatePipe, SlicePipe } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { CommonModule, DatePipe, SlicePipe, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { BlogService } from '../../../../core/services/blog.service';
 import { Article } from '../../../../core/models/blog.model';
+import { SeoService } from '../../../../core/services/seo.service';
 
 @Component({
   selector: 'app-blog',
@@ -12,6 +13,8 @@ import { Article } from '../../../../core/models/blog.model';
 })
 export class BlogComponent implements OnInit {
   private blogService = inject(BlogService);
+  private seo = inject(SeoService);
+  private platformId = inject(PLATFORM_ID);
 
   articles: Article[] = [];
   chargement = true;
@@ -19,6 +22,10 @@ export class BlogComponent implements OnInit {
   articleOuvert: Article | null = null;
 
   ngOnInit() {
+    this.seo.definir({
+      titre: 'Blog',
+      description: 'Conseils immobiliers, tendances du marché d\'Abidjan et guides pour investir sereinement dans le programme de la SCI-AGD à Songon.',
+    });
     this.blogService.getArticles().subscribe({
       next: (data) => {
         this.articles = data;
@@ -33,11 +40,20 @@ export class BlogComponent implements OnInit {
 
   lireArticle(article: Article) {
     this.articleOuvert = article;
-    document.body.style.overflow = 'hidden';
+    this.seo.definir({ titre: article.titre, description: article.resume });
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   fermerArticle() {
     this.articleOuvert = null;
-    document.body.style.overflow = '';
+    this.seo.definir({
+      titre: 'Blog',
+      description: 'Conseils immobiliers, tendances du marché d\'Abidjan et guides pour investir sereinement dans le programme de la SCI-AGD à Songon.',
+    });
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = '';
+    }
   }
 }

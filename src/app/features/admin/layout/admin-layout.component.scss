@@ -1,0 +1,115 @@
+.admin {
+  display: flex;
+  min-height: 100vh;
+  background: #F5F7FA;
+}
+
+.admin__sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #070D16;
+  color: #F4F1EA;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.admin__logo {
+  margin-bottom: 40px;
+  padding: 0 8px;
+
+  span {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #C9A876;
+  }
+
+  small {
+    display: block;
+    font-size: 0.72rem;
+    color: #9AA5B4;
+    margin-top: 2px;
+  }
+}
+
+.admin__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+
+  a {
+    padding: 11px 12px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(244, 241, 234, 0.65);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(244, 241, 234, 0.05);
+      color: #F4F1EA;
+    }
+
+    &.actif {
+      background: rgba(201, 168, 118, 0.12);
+      color: #C9A876;
+    }
+  }
+}
+
+.admin__deconnexion {
+  background: none;
+  border: 1px solid rgba(244, 241, 234, 0.15);
+  color: rgba(244, 241, 234, 0.6);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(244, 241, 234, 0.3);
+    color: #F4F1EA;
+  }
+}
+
+.admin__contenu {
+  flex: 1;
+  padding: 40px 48px;
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .admin {
+    flex-direction: column;
+  }
+
+  .admin__sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 20px;
+  }
+
+  .admin__logo {
+    margin-bottom: 0;
+    margin-right: 24px;
+  }
+
+  .admin__nav {
+    flex-direction: row;
+    flex: 1;
+  }
+
+  .admin__contenu {
+    padding: 24px;
+  }
+}

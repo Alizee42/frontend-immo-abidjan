@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, PLATFORM_ID, inject } from '@angular/core
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SeoService } from '../../../../core/services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -20,39 +21,39 @@ export class HomeComponent implements OnInit, OnDestroy {
   slideActif = 0;
   private timer: any;
   private platformId = inject(PLATFORM_ID);
+  private seo = inject(SeoService);
 
   chiffres = [
-    { valeur: '400', unite: '', label: 'Résidences', detail: 'à vendre & à louer' },
-    { valeur: '20', unite: 'ha', label: 'Surface totale', detail: 'au cœur d\'Abidjan' },
-    { valeur: '3', unite: '', label: 'Quartiers', detail: 'espaces de vie distincts' },
-    { valeur: '100', unite: '%', label: 'Sécurisé', detail: 'titre foncier enregistré' },
+    { valeur: '124', unite: 'ha', label: 'Domaine de Songon', detail: 'couvert par un ACD' },
+    { valeur: '20', unite: 'ha', label: 'Programme engagé', detail: 'SOBE, commerce, hôtel' },
+    { valeur: '400', unite: '+', label: 'Logements', detail: 'sur les 3 quartiers SOBE' },
+    { valeur: '3', unite: '', label: 'Frères fondateurs', detail: 'famille Atchan' },
   ];
 
-  atouts = [
+  mission = [
     {
-      icone: 'location',
-      tag: 'Localisation',
-      titre: 'Abidjan, capitale économique de l\'Afrique de l\'Ouest',
-      texte: 'Ville à la croissance immobilière parmi les plus dynamiques du continent, Abidjan offre un marché porteur, une demande locative soutenue et une valorisation à long terme.',
-      stat: '+7%', statLabel: 'croissance annuelle du marché'
+      lettre: 'P',
+      titre: 'Préserver',
+      texte: 'Sécuriser juridiquement le foncier familial. 104 des 124 hectares restent en réserve, volontairement non engagés dans le programme immobilier.',
     },
     {
-      icone: 'home',
-      tag: 'Qualité',
-      titre: 'Des maisons conçues pour durer',
-      texte: 'Matériaux sélectionnés, finitions soignées, espaces bien pensés — chaque résidence est construite selon des standards modernes pour garantir confort et durabilité au quotidien.',
-      stat: '400', statLabel: 'résidences livrées clés en main'
+      lettre: 'C',
+      titre: 'Construire',
+      texte: 'Développer un programme immobilier maîtrisé — les quartiers SOBE — sur les 20 hectares mobilisés, avec des maisons pensées pour durer.',
     },
     {
-      icone: 'shield',
-      tag: 'Sécurité',
-      titre: 'Votre investissement protégé',
-      texte: 'Chaque bien dispose d\'un titre foncier officiel. Que vous soyez en France, au Canada ou ailleurs, notre équipe vous accompagne à chaque étape de façon transparente.',
-      stat: '100%', statLabel: 'des biens titrés et enregistrés'
+      lettre: 'L',
+      titre: 'Loger',
+      texte: 'Offrir des solutions accessibles à l\'achat comme à la location, pour les familles d\'Abidjan comme pour la diaspora.',
     },
   ];
 
   ngOnInit() {
+    this.seo.definir({
+      titre: 'Accueil',
+      description: 'SCI-AGD : un domaine familial de 124 hectares à Songon Agban. 20 hectares mobilisés pour un programme résidentiel de plus de 400 logements, à vendre et à louer.',
+    });
+
     if (isPlatformBrowser(this.platformId)) {
       this.timer = setInterval(() => {
         this.slideActif = (this.slideActif + 1) % this.slides.length;

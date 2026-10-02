@@ -1,10 +1,10 @@
 <!-- HEADER -->
 <section class="page-header">
   <div class="container">
-    <span class="badge">400 résidences</span>
+    <span class="badge">SOBE 1 · 2 · 3</span>
     <h1 class="page-header__titre">Acheter &amp; Louer</h1>
     <p class="page-header__sous-titre">
-      Parcourez l'ensemble de notre programme résidentiel. Filtrez par type, quartier ou disponibilité.
+      Terrains viabilisés et maisons clés en main des quartiers SOBE, en vente, location ou location-vente.
     </p>
   </div>
 </section>
@@ -17,13 +17,27 @@
         <option value="">Tous les types</option>
         <option value="VENTE">Vente</option>
         <option value="LOCATION">Location</option>
+        <option value="LOCATION_VENTE">Location-vente</option>
+      </select>
+
+      <select [(ngModel)]="filtreCategorie" (change)="charger()" class="filtre-select">
+        <option value="">Terrains et maisons</option>
+        <option value="MAISON_CLES_EN_MAIN">Maisons clés en main</option>
+        <option value="TERRAIN_VIABILISE">Terrains viabilisés</option>
+      </select>
+
+      <select [(ngModel)]="filtreAvancement" (change)="charger()" class="filtre-select">
+        <option value="">Tout avancement</option>
+        <option value="LIVRE">Livré</option>
+        <option value="EN_TRAVAUX">En travaux</option>
+        <option value="PREVU">Prévu</option>
       </select>
 
       <select [(ngModel)]="filtreQuartier" (change)="charger()" class="filtre-select">
         <option value="">Tous les quartiers</option>
-        <option value="QUARTIER_1">Quartier Nord</option>
-        <option value="QUARTIER_2">Quartier Centre</option>
-        <option value="QUARTIER_3">Quartier Sud</option>
+        <option value="QUARTIER_1">SOBE 1</option>
+        <option value="QUARTIER_2">SOBE 2</option>
+        <option value="QUARTIER_3">SOBE 3</option>
       </select>
 
       <select [(ngModel)]="filtreStatus" (change)="charger()" class="filtre-select">
@@ -85,11 +99,14 @@
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 </div>
               }
-              <span class="bien-card__badge" [class]="'badge-' + bien.type.toLowerCase()">{{ bien.type === 'VENTE' ? 'Vente' : 'Location' }}</span>
+              <span class="bien-card__badge" [class]="'badge-' + bien.type.toLowerCase()">{{ labelsType[bien.type] }}</span>
               <span class="bien-card__status" [class]="'status-' + bien.status.toLowerCase()">{{ labelStatus(bien.status) }}</span>
+              @if (bien.avancement !== 'LIVRE') {
+                <span class="bien-card__avancement" [class]="'avancement-' + bien.avancement.toLowerCase()">{{ labelsAvancement[bien.avancement] }}</span>
+              }
             </div>
             <div class="bien-card__corps">
-              <div class="bien-card__quartier">{{ labelQuartier(bien.quartier) }}</div>
+              <div class="bien-card__quartier">{{ labelQuartier(bien.quartier) }} · {{ labelsCategorie[bien.categorie] }}</div>
               <h3 class="bien-card__titre">{{ bien.titre }}</h3>
               <p class="bien-card__desc">{{ bien.description | slice:0:100 }}{{ bien.description.length > 100 ? '...' : '' }}</p>
               <div class="bien-card__details">
@@ -113,7 +130,7 @@
                 }
               </div>
               <div class="bien-card__pied">
-                <span class="bien-card__prix">{{ formatPrix(bien.prix) }} FCFA<span class="bien-card__prix-unite">{{ bien.type === 'LOCATION' ? '&nbsp;/ mois' : '' }}</span></span>
+                <span class="bien-card__prix">{{ formatPrix(bien.prix) }} FCFA<span class="bien-card__prix-unite">{{ bien.type !== 'VENTE' ? '&nbsp;/ mois' : '' }}</span></span>
                 <a routerLink="/contact" class="bien-card__cta">Demander info</a>
               </div>
             </div>

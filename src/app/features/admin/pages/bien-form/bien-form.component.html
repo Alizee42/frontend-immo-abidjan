@@ -1,0 +1,133 @@
+<div class="page-entete">
+  <div>
+    <h1>{{ bienId ? 'Modifier le bien' : 'Ajouter un bien' }}</h1>
+    <p>Les biens marqués « Disponible » apparaissent sur la page Acheter / Louer.</p>
+  </div>
+  <a routerLink="/admin/biens" class="btn-action btn-action--ghost">Retour à la liste</a>
+</div>
+
+@if (chargement) {
+  <p class="etat">Chargement...</p>
+} @else {
+
+  <form class="form-carte" [formGroup]="form" (ngSubmit)="soumettre()">
+
+    @if (erreur) {
+      <div class="etat etat--erreur" style="margin-bottom: 18px;">{{ erreur }}</div>
+    }
+
+    <div class="form-champ">
+      <label for="titre">Titre</label>
+      <input id="titre" type="text" formControlName="titre" placeholder="Ex: Maison 3 chambres — SOBE 1">
+    </div>
+
+    <div class="form-champ">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" placeholder="Description du bien..."></textarea>
+    </div>
+
+    <div class="form-ligne">
+      <div class="form-champ">
+        <label for="type">Type</label>
+        <select id="type" formControlName="type">
+          <option value="VENTE">Vente</option>
+          <option value="LOCATION">Location</option>
+          <option value="LOCATION_VENTE">Location-vente</option>
+        </select>
+      </div>
+
+      <div class="form-champ">
+        <label for="categorie">Catégorie</label>
+        <select id="categorie" formControlName="categorie">
+          <option value="MAISON_CLES_EN_MAIN">Maison clés en main</option>
+          <option value="TERRAIN_VIABILISE">Terrain viabilisé</option>
+        </select>
+      </div>
+
+      <div class="form-champ">
+        <label for="avancement">Avancement</label>
+        <select id="avancement" formControlName="avancement">
+          <option value="LIVRE">Livré</option>
+          <option value="EN_TRAVAUX">En travaux</option>
+          <option value="PREVU">Prévu</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-ligne">
+      <div class="form-champ">
+        <label for="status">Statut commercial</label>
+        <select id="status" formControlName="status">
+          <option value="DISPONIBLE">Disponible</option>
+          <option value="RESERVE">Réservé</option>
+          <option value="VENDU">Vendu</option>
+          <option value="LOUE">Loué</option>
+        </select>
+      </div>
+
+      <div class="form-champ">
+        <label for="quartier">Quartier</label>
+        <select id="quartier" formControlName="quartier">
+          <option value="QUARTIER_1">SOBE 1</option>
+          <option value="QUARTIER_2">SOBE 2</option>
+          <option value="QUARTIER_3">SOBE 3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-ligne">
+      <div class="form-champ">
+        <label for="prix">{{ labelPrix }}</label>
+        <input id="prix" type="number" formControlName="prix" placeholder="65000000">
+      </div>
+
+      <div class="form-champ">
+        <label for="superficie">Superficie (m²)</label>
+        <input id="superficie" type="number" formControlName="superficie" placeholder="180">
+      </div>
+
+      @if (!estTerrain) {
+        <div class="form-champ">
+          <label for="nombreChambres">Chambres</label>
+          <input id="nombreChambres" type="number" formControlName="nombreChambres" placeholder="3">
+        </div>
+
+        <div class="form-champ">
+          <label for="nombreSallesDeBain">Salles de bain</label>
+          <input id="nombreSallesDeBain" type="number" formControlName="nombreSallesDeBain" placeholder="2">
+        </div>
+      }
+    </div>
+
+    <div class="form-champ">
+      <label>Photos</label>
+
+      @if (photos.length > 0) {
+        <div class="photos-grille">
+          @for (photo of photos; track photo; let i = $index) {
+            <div class="photo-item">
+              <img [src]="photo" [alt]="'Photo ' + (i + 1)">
+              <button type="button" class="photo-item__retirer" (click)="retirerPhoto(i)" aria-label="Retirer la photo">×</button>
+            </div>
+          }
+        </div>
+      }
+
+      <label class="upload-zone">
+        <input type="file" accept="image/png,image/jpeg,image/webp" multiple (change)="onFichiersChoisis($event)" [disabled]="uploadEnCours">
+        <span>{{ uploadEnCours ? 'Envoi en cours...' : '+ Ajouter des photos' }}</span>
+      </label>
+
+      @if (erreurUpload) {
+        <span class="etat etat--erreur">{{ erreurUpload }}</span>
+      }
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-action" [disabled]="enregistrement">
+        {{ enregistrement ? 'Enregistrement...' : (bienId ? 'Enregistrer les modifications' : 'Créer le bien') }}
+      </button>
+      <a routerLink="/admin/biens" class="btn-action btn-action--ghost">Annuler</a>
+    </div>
+  </form>
+}

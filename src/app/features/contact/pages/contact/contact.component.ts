@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ContactService } from '../../../../core/services/contact.service';
+import { SeoService } from '../../../../core/services/seo.service';
 
 @Component({
   selector: 'app-contact',
@@ -9,11 +10,19 @@ import { ContactService } from '../../../../core/services/contact.service';
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
   private fb = inject(FormBuilder);
   private contactService = inject(ContactService);
+  private seo = inject(SeoService);
 
   envoi: 'idle' | 'loading' | 'succes' | 'erreur' = 'idle';
+
+  ngOnInit() {
+    this.seo.definir({
+      titre: 'Contact',
+      description: 'Contactez l\'équipe SCI-AGD pour toute question sur les résidences, terrains et projets du domaine de Songon.',
+    });
+  }
 
   form = this.fb.group({
     nom: ['', Validators.required],
