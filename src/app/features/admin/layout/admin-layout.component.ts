@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { DemandeService } from '../../../core/services/demande.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -9,9 +10,21 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.scss'
 })
-export class AdminLayoutComponent {
-  private auth = inject(AuthService);
+export class AdminLayoutComponent implements OnInit {
+  auth = inject(AuthService);
+  private demandes = inject(DemandeService);
   private router = inject(Router);
+
+  menuOuvert = false;
+  demandesNonTraitees = this.demandes.nonTraitees;
+
+  get initiale(): string {
+    return (this.auth.utilisateur()?.nom || 'A').charAt(0).toUpperCase();
+  }
+
+  ngOnInit() {
+    this.demandes.lister().subscribe({ error: () => {} });
+  }
 
   deconnecter() {
     this.auth.deconnecter();

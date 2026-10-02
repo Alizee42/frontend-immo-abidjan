@@ -128,12 +128,14 @@
   }
 
   &__admin {
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: underline;
+    text-underline-offset: 3px;
     transition: var(--transition);
 
     &:hover {
-      color: rgba(255, 255, 255, 0.55);
+      color: #C9A876;
     }
   }
 }

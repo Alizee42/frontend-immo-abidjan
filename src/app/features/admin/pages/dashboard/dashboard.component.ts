@@ -5,6 +5,7 @@ import { forkJoin } from 'rxjs';
 import { PropertyService } from '../../../../core/services/property.service';
 import { BlogService } from '../../../../core/services/blog.service';
 import { AuthService } from '../../../../core/services/auth.service';
+import { DemandeService } from '../../../../core/services/demande.service';
 import { Property } from '../../../../core/models/property.model';
 import { Article } from '../../../../core/models/blog.model';
 
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit {
   private propertyService = inject(PropertyService);
   private blogService = inject(BlogService);
   auth = inject(AuthService);
+  demandesNonTraitees = inject(DemandeService).nonTraitees;
 
   chargement = true;
   erreur = false;

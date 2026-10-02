@@ -13,6 +13,11 @@ export const routes: Routes = [
       import('./features/properties/pages/properties/properties.component').then(m => m.PropertiesComponent),
   },
   {
+    path: 'acheter-louer/:id',
+    loadComponent: () =>
+      import('./features/properties/pages/bien-detail/bien-detail.component').then(m => m.BienDetailComponent),
+  },
+  {
     path: 'vision',
     loadComponent: () =>
       import('./features/vision/pages/vision/vision.component').then(m => m.VisionComponent),
@@ -66,6 +71,26 @@ export const routes: Routes = [
         path: 'biens/:id',
         loadComponent: () =>
           import('./features/admin/pages/bien-form/bien-form.component').then(m => m.BienFormComponent),
+      },
+      {
+        path: 'demandes',
+        loadComponent: () =>
+          import('./features/admin/pages/demandes/demandes.component').then(m => m.DemandesComponent),
+      },
+      {
+        path: 'parametres',
+        loadComponent: () =>
+          import('./features/admin/pages/parametres/parametres.component').then(m => m.ParametresComponent),
+      },
+      {
+        path: 'pages',
+        loadComponent: () =>
+          import('./features/admin/pages/pages-site/pages-site.component').then(m => m.PagesSiteComponent),
+      },
+      {
+        path: 'pages/:cle',
+        loadComponent: () =>
+          import('./features/admin/pages/page-editeur/page-editeur.component').then(m => m.PageEditeurComponent),
       },
       {
         path: 'articles',

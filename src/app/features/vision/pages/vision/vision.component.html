@@ -1,11 +1,9 @@
-<!-- HEADER -->
-<section class="page-header">
+<!-- EN-TÊTE -->
+<section class="entete">
   <div class="container">
-    <span class="badge">SCI-AGD — Songon Agban</span>
-    <h1 class="page-header__titre">Notre Vision</h1>
-    <p class="page-header__sous-titre">
-      Préserver, Construire, Loger — la vision foncière et immobilière portée par la SCI-AGD sur le domaine de Songon.
-    </p>
+    <span class="entete__surtitre">SCI-AGD · Songon Agban</span>
+    <h1 class="entete__titre">Notre <em>vision</em></h1>
+    <p class="entete__texte">{{ c.introTexte }}</p>
   </div>
 </section>
 
@@ -14,7 +12,7 @@
   <div class="container vision__inner">
     <div class="vision__visuel">
       <img
-        src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=900&q=80"
+        [src]="c.foncierImage"
         alt="Vue du domaine de Songon">
       <div class="vision__badge-flottant">
         <strong>124 ha</strong>
@@ -23,17 +21,9 @@
     </div>
     <div class="vision__texte">
       <span class="badge">Structure et foncier</span>
-      <h2 class="titre-section">Une vision immobilière familiale</h2>
-      <p class="texte-corps">
-        La SCI-AGD, fondée par trois frères Atchan originaires de Songon Agban, porte une vision
-        immobilière familiale autour d'une mission : <strong>Préserver, Construire, Loger</strong>.
-      </p>
-      <p class="texte-corps">
-        Le domaine de Songon représente <strong>124 hectares</strong> couverts par un ACD. Sur cette
-        surface, <strong>20 hectares</strong> sont aujourd'hui mobilisés pour le programme immobilier,
-        tandis que <strong>104 hectares</strong> restent en réserve foncière, préservée juridiquement et
-        distincte du programme engagé.
-      </p>
+      <h2 class="titre-section">{{ c.foncierTitre }}</h2>
+      <p class="texte-corps">{{ c.foncierTexte1 }}</p>
+      <p class="texte-corps">{{ c.foncierTexte2 }}</p>
       <div class="vision__stats">
         @for (s of fonciers; track s.label) {
           <div class="vision__stat">
@@ -56,15 +46,42 @@
         Le programme mobilisé se répartit entre quartiers résidentiels, projets futurs et réserve non affectée.
       </p>
     </div>
-    <div class="repartition__grille">
+    <div class="barres">
+      <div class="barre">
+        <div class="barre__titre">Le domaine de Songon <span>124 ha</span></div>
+        <div class="barre__piste">
+          @for (s of barreDomaine; track s.nom) {
+            <div [class]="'barre__segment barre__segment--' + s.classe" [style.flex-grow]="s.ha" [title]="s.nom + ' — ' + s.ha + ' ha'"></div>
+          }
+        </div>
+        <div class="barre__legende">
+          @for (s of barreDomaine; track s.nom) {
+            <span><i [class]="'barre__puce barre__segment--' + s.classe"></i>{{ s.nom }} · {{ s.ha }} ha</span>
+          }
+        </div>
+      </div>
+      <div class="barre">
+        <div class="barre__titre">Le programme immobilier <span>20 ha</span></div>
+        <div class="barre__piste">
+          @for (s of barreProgramme; track s.nom) {
+            <div [class]="'barre__segment barre__segment--' + s.classe" [style.flex-grow]="s.ha" [title]="s.nom + ' — ' + s.ha + ' ha'"></div>
+          }
+        </div>
+        <div class="barre__legende">
+          @for (s of barreProgramme; track s.nom) {
+            <span><i [class]="'barre__puce barre__segment--' + s.classe"></i>{{ s.nom }} · {{ s.ha === 0.3 ? '3 000 m²' : (s.ha | number:'1.0-1') + ' ha' }}</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="repartition__liste">
       @for (r of repartition; track r.nom) {
-        <div class="repartition-card">
-          <div class="repartition-card__entete">
-            <h3 class="repartition-card__nom">{{ r.nom }}</h3>
-            <span class="repartition-card__surface">{{ r.surface }}</span>
-          </div>
-          <span class="statut-badge" [class]="'statut-badge--' + r.statut">{{ r.statutLabel }}</span>
-          <p class="repartition-card__desc">{{ r.description }}</p>
+        <div class="repartition-ligne">
+          <i [class]="'barre__puce barre__segment--' + r.classe"></i>
+          <span class="repartition-ligne__nom">{{ r.nom }}</span>
+          <span class="repartition-ligne__surface">{{ r.surface }}</span>
+          <span class="statut-badge" [class]="'statut-badge statut-badge--' + r.statut">{{ r.statutLabel }}</span>
         </div>
       }
     </div>
@@ -78,18 +95,34 @@
       <span class="badge">Cœur résidentiel</span>
       <h2 class="titre-section">SOBE 1, 2 et 3</h2>
       <p class="sous-titre">
-        Les trois SOBE constituent le cœur résidentiel du programme, avec un potentiel de plus de 400 logements :
-        terrains viabilisés, maisons clés en main, vente, location et location-vente.
+        Les trois SOBE constituent le cœur résidentiel du programme, avec un potentiel de plus de 400 logements.
+        Offre envisagée : terrains viabilisés et maisons clés en main, en vente, location ou location-vente.
       </p>
     </div>
     <div class="quartiers__grille">
-      @for (q of sobe; track q.nom) {
-        <div class="quartier-card" [style.--couleur]="q.couleur">
-          <div class="quartier-card__num">{{ q.num }}</div>
-          <h3 class="quartier-card__nom">{{ q.nom }}</h3>
-          <p class="quartier-card__desc">{{ q.description }}</p>
-          <p class="quartier-card__statut">{{ q.statut }}</p>
-        </div>
+      @for (q of c.sobe; track $index) {
+        <article class="quartier-card" [style.--couleur]="q.couleur">
+          <div class="quartier-card__visuel">
+            <img [src]="q.image" [alt]="'Illustration ' + q.nom" loading="lazy">
+            <span class="quartier-card__num">{{ q.num }}</span>
+            <h3 class="quartier-card__nom">{{ q.nom }}</h3>
+          </div>
+          <div class="quartier-card__corps">
+            <p class="quartier-card__desc">{{ q.description }}</p>
+            @if (statsSobe?.[q.quartier]; as s) {
+              <div class="quartier-card__stats">
+                <div><strong>{{ s.disponibles }}</strong><span>{{ s.disponibles > 1 ? 'biens disponibles' : 'bien disponible' }}</span></div>
+                <div><strong>{{ s.maisons }}</strong><span>{{ s.maisons > 1 ? 'maisons' : 'maison' }}</span></div>
+                <div><strong>{{ s.terrains }}</strong><span>{{ s.terrains > 1 ? 'terrains' : 'terrain' }}</span></div>
+              </div>
+            }
+            <p class="quartier-card__statut">{{ q.statut }}</p>
+            <a routerLink="/acheter-louer" [queryParams]="{ quartier: q.quartier }" class="quartier-card__lien">
+              Voir les biens de {{ q.nom }}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
       }
     </div>
     <p class="repartition__note">
@@ -100,17 +133,35 @@
 </section>
 
 <!-- ATOUTS -->
-<section class="section section-fond">
+<section class="atouts">
   <div class="container">
-    <div class="entete-centre">
-      <span class="badge">Pourquoi la SCI-AGD</span>
-      <h2 class="titre-section">Ce qui rend cette vision unique</h2>
+    <div class="atouts__entete">
+      <span class="atouts__surtitre">Pourquoi la SCI-AGD</span>
+      <h2 class="atouts__titre">Ce qui rend cette <em>vision unique</em></h2>
     </div>
     <div class="atouts__grille">
-      @for (a of atouts; track a.titre) {
+      @for (a of c.atouts; track $index; let i = $index) {
         <div class="atout-item">
-          <div class="atout-item__icone" [innerHTML]="a.svg"></div>
-          <h4>{{ a.titre }}</h4>
+          <div class="atout-item__haut">
+            <span class="atout-item__icone">
+              @switch (a.icone) {
+                @case ('bouclier') {
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+                }
+                @case ('famille') {
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                }
+                @case ('formules') {
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10.5L12 3l9 7.5V21H3z"/><path d="M9 21v-6h6v6"/></svg>
+                }
+                @case ('monde') {
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                }
+              }
+            </span>
+            <span class="atout-item__num">0{{ i + 1 }}</span>
+          </div>
+          <h3>{{ a.titre }}</h3>
           <p>{{ a.texte }}</p>
         </div>
       }
@@ -129,23 +180,44 @@
         commercialisés ou construits — ils sont présentés ici à titre indicatif.
       </p>
     </div>
-    <div class="projets-futurs__grille">
-      <div class="projet-futur-card">
-        <span class="statut-badge statut-badge--etude">Projet à l'étude</span>
-        <h3>Centre commercial familial</h3>
-        <p>
-          Une parcelle de 3 hectares est réservée à un futur retail park de proximité : supermarché, boutiques,
-          restauration, loisirs familiaux et stationnements, développé progressivement.
-        </p>
-      </div>
-      <div class="projet-futur-card">
-        <span class="statut-badge statut-badge--etude">Concept à préciser</span>
-        <h3>Projet hôtelier de Songon</h3>
-        <p>
-          Une emprise de 3 000 m² est prévue pour un futur projet hôtelier à Songon. Positionnement, capacité,
-          prestations et calendrier restent à définir.
-        </p>
-      </div>
+    <div class="projets-futurs">
+      @for (p of c.projetsFuturs; track $index) {
+        <article class="projet">
+          <div class="projet__visuel">
+            <img [src]="p.image" [alt]="'Illustration — ' + p.nom" loading="lazy">
+            <span class="projet__surface">{{ p.surface }}</span>
+            <span class="projet__illustration">Image d'illustration</span>
+          </div>
+          <div class="projet__corps">
+            <h3>{{ p.nom }}</h3>
+            <p class="projet__intro">{{ p.intro }}</p>
+
+            <ol class="frise" [attr.aria-label]="'Avancement : ' + etapes[p.etape]">
+              @for (e of etapes; track e; let i = $index) {
+                <li class="frise__etape" [class.frise__etape--faite]="i < p.etape" [class.frise__etape--actuelle]="i === p.etape">
+                  <span class="frise__point"></span>
+                  <span class="frise__label">{{ e }}</span>
+                </li>
+              }
+            </ol>
+
+            <div class="projet__listes">
+              <div>
+                <h4>Envisagé</h4>
+                <ul class="projet__liste projet__liste--ok">
+                  @for (x of p.envisage; track x) { <li>{{ x }}</li> }
+                </ul>
+              </div>
+              <div>
+                <h4>Reste à définir</h4>
+                <ul class="projet__liste projet__liste--attente">
+                  @for (x of p.aDefinir; track x) { <li>{{ x }}</li> }
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+      }
     </div>
   </div>
 </section>
@@ -155,7 +227,7 @@
   <div class="container cta-section__inner">
     <div>
       <h2>Prêt à investir ou à vous installer ?</h2>
-      <p>Notre équipe vous accompagne de la première question jusqu'à la signature.</p>
+      <p>Où que vous viviez, nous répondons à toutes vos questions, sur place comme à distance.</p>
     </div>
     <div class="cta-section__actions">
       <a routerLink="/acheter-louer" class="btn-primary">Voir les biens disponibles</a>

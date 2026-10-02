@@ -1,27 +1,50 @@
 <div class="connexion">
-  <form class="connexion__carte" [formGroup]="form" (ngSubmit)="soumettre()">
-    <div class="connexion__entete">
-      <span class="connexion__logo">SCI-AGD</span>
-      <h1>Espace administration</h1>
-      <p>Connectez-vous pour gérer les biens et les articles.</p>
-    </div>
+  <!-- TEXTE -->
+  <aside class="connexion__texte">
+    <span class="connexion__marque">SCI-AGD</span>
+    <p class="connexion__devise">Préserver, Construire, <em>Loger</em></p>
+    <p class="connexion__intro">L'espace de gestion du site du domaine de Songon Agban.</p>
+    <ul class="connexion__liste">
+      <li>Les biens à vendre et à louer</li>
+      <li>Les articles du blog</li>
+      <li>Les textes et images des pages</li>
+      <li>Les demandes de contact</li>
+    </ul>
+  </aside>
 
-    @if (erreur) {
-      <div class="connexion__erreur">{{ erreur }}</div>
-    }
+  <!-- FORMULAIRE -->
+  <div class="connexion__zone">
+    <form class="connexion__carte" [formGroup]="form" (ngSubmit)="soumettre()">
+      <div class="connexion__entete">
+        <span class="connexion__surtitre">Espace administration</span>
+        <h1>Bon retour</h1>
+        <p>Connectez-vous pour gérer les biens, les articles et le contenu du site.</p>
+      </div>
 
-    <label class="champ">
-      <span>Email</span>
-      <input type="email" formControlName="email" placeholder="vous&#64;exemple.com" autocomplete="username">
-    </label>
+      @if (erreur) {
+        <div class="connexion__erreur">{{ erreur }}</div>
+      }
 
-    <label class="champ">
-      <span>Mot de passe</span>
-      <input type="password" formControlName="motDePasse" placeholder="••••••••" autocomplete="current-password">
-    </label>
+      <label class="champ">
+        <span>Email</span>
+        <input type="email" formControlName="email" placeholder="vous&#64;exemple.com" autocomplete="username">
+      </label>
 
-    <button type="submit" class="connexion__btn" [disabled]="chargement">
-      {{ chargement ? 'Connexion...' : 'Se connecter' }}
-    </button>
-  </form>
+      <label class="champ">
+        <span>Mot de passe</span>
+        <div class="champ__mdp">
+          <input [type]="voirMotDePasse ? 'text' : 'password'" formControlName="motDePasse" autocomplete="current-password">
+          <button type="button" (click)="voirMotDePasse = !voirMotDePasse" [attr.aria-label]="voirMotDePasse ? 'Masquer le mot de passe' : 'Afficher le mot de passe'">
+            {{ voirMotDePasse ? 'Masquer' : 'Afficher' }}
+          </button>
+        </div>
+      </label>
+
+      <button type="submit" class="connexion__btn" [disabled]="chargement">
+        {{ chargement ? 'Connexion...' : 'Se connecter' }}
+      </button>
+
+      <a routerLink="/" class="connexion__retour">← Retour au site</a>
+    </form>
+  </div>
 </div>

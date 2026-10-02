@@ -1,17 +1,17 @@
 <!-- ===== HERO ===== -->
 <section class="hero">
 
-  @for (slide of slides; track $index) {
+  @for (slide of c.slides; track $index) {
     <div
       class="hero__slide"
       [class.actif]="slideActif === $index"
-      [style.background-image]="'url(' + slide.url + ')'">
+      [style.background-image]="'url(' + slide + ')'">
     </div>
   }
   <div class="hero__overlay"></div>
 
   <div class="hero__dots">
-    @for (slide of slides; track $index) {
+    @for (slide of c.slides; track $index) {
       <button
         class="hero__dot-btn"
         [class.actif]="slideActif === $index"
@@ -24,18 +24,15 @@
   <div class="container hero__contenu">
     <div class="hero__eyebrow">
       <span class="hero__dot"></span>
-      Songon Agban · Côte d'Ivoire
+      {{ c.heroLieu }}
     </div>
 
     <h1 class="hero__titre">
-      Un domaine familial.<br>
-      <em>Une vision pour Abidjan.</em>
+      {{ c.heroTitre }}<br>
+      <em>{{ c.heroTitreItalique }}</em>
     </h1>
 
-    <p class="hero__accroche">
-      Sur son domaine familial de Songon Agban, la SCI-AGD développe un programme résidentiel
-      de plus de 400 logements — pensé pour durer, ouvert à l'achat comme à la location.
-    </p>
+    <p class="hero__accroche">{{ c.heroAccroche }}</p>
 
     <div class="hero__actions">
       <a routerLink="/acheter-louer" class="hero__btn-primary">
@@ -57,7 +54,7 @@
 <!-- ===== CHIFFRES ===== -->
 <section class="chiffres-section">
   <div class="container chiffres-grille">
-    @for (item of chiffres; track item.label) {
+    @for (item of c.chiffres; track $index) {
       <div class="chiffre">
         <div class="chiffre__valeur">{{ item.valeur }}<span class="chiffre__unite">{{ item.unite }}</span></div>
         <div class="chiffre__label">{{ item.label }}</div>
@@ -72,9 +69,9 @@
   <div class="container chapitre__grille">
     <div class="chapitre__visuel">
       <img
-        src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1000&q=80"
+        [src]="c.domaineImage"
         alt="Le domaine de Songon">
-      <div class="chapitre__legende">124 ha couverts par un ACD</div>
+      <div class="chapitre__legende">{{ c.domaineLegende }}</div>
     </div>
 
     <div class="chapitre__texte">
@@ -83,17 +80,9 @@
         <span class="chapitre__trait"></span>
         <span class="chapitre__nom">Le domaine</span>
       </div>
-      <h2 class="chapitre__titre">Un héritage foncier,<br>engagé avec mesure</h2>
-      <p class="chapitre__corps">
-        Le domaine de Songon appartient à la famille Atchan, originaire de Songon Agban.
-        Sur les <strong>124 hectares</strong> couverts par un ACD, la SCI-AGD n'a mobilisé que
-        <strong>20 hectares</strong> pour son programme immobilier actuel.
-      </p>
-      <p class="chapitre__corps">
-        Les <strong>104 hectares</strong> restants sont volontairement laissés en réserve foncière,
-        préservés juridiquement — une décision qui protège l'avenir de la famille plutôt que de
-        financer un projet limité.
-      </p>
+      <h2 class="chapitre__titre">{{ c.domaineTitre }}</h2>
+      <p class="chapitre__corps">{{ c.domaineTexte1 }}</p>
+      <p class="chapitre__corps">{{ c.domaineTexte2 }}</p>
       <a routerLink="/vision" class="chapitre__lien">
         Voir la répartition complète du domaine
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -111,16 +100,12 @@
         <span class="chapitre__trait"></span>
         <span class="chapitre__nom">SOBE 1 · 2 · 3</span>
       </div>
-      <h2 class="chapitre__titre chapitre__titre--clair">Trois quartiers,<br>un même cœur résidentiel</h2>
-      <p class="chapitre__corps chapitre__corps--clair">
-        SOBE 1, 2 et 3 forment le programme résidentiel du domaine : plus de
-        <strong>400 logements</strong> sur 12 hectares, entre terrains viabilisés et maisons
-        clés en main.
-      </p>
+      <h2 class="chapitre__titre chapitre__titre--clair">{{ c.sobeTitre }}</h2>
+      <p class="chapitre__corps chapitre__corps--clair">{{ c.sobeTexte }}</p>
       <ul class="chapitre__liste">
-        <li>Vente, location et location-vente</li>
-        <li>Titres fonciers enregistrés</li>
-        <li>Accompagnement à distance pour la diaspora</li>
+        @for (point of c.sobePoints; track $index) {
+          <li>{{ point }}</li>
+        }
       </ul>
       <a routerLink="/acheter-louer" class="chapitre__lien chapitre__lien--clair">
         Voir les biens disponibles
@@ -130,12 +115,48 @@
 
     <div class="chapitre__visuel">
       <img
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80"
+        [src]="c.sobeImage"
         alt="Résidences des quartiers SOBE">
-      <div class="chapitre__legende chapitre__legende--sombre">12 ha · 400+ logements</div>
+      <div class="chapitre__legende chapitre__legende--sombre">{{ c.sobeLegende }}</div>
     </div>
   </div>
 </section>
+
+<!-- ===== BIENS DISPONIBLES ===== -->
+@if (biensVedette.length > 0) {
+  <section class="vedette">
+    <div class="container">
+      <div class="vedette__entete">
+        <div>
+          <span class="chapitre__nom">Disponible maintenant</span>
+          <h2 class="vedette__titre">Biens disponibles</h2>
+        </div>
+        <a routerLink="/acheter-louer" class="chapitre__lien">
+          Voir tous les biens
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="vedette__grille">
+        @for (bien of biensVedette; track bien.id) {
+          <a [routerLink]="['/acheter-louer', bien.id]" class="vedette-card">
+            <div class="vedette-card__image">
+              <img [src]="imageBien(bien)" [alt]="bien.titre" loading="lazy">
+              <span class="vedette-card__type">{{ labelsType[bien.type] }}</span>
+              @if (bien.avancement !== 'LIVRE') {
+                <span class="vedette-card__avancement">{{ labelsAvancement[bien.avancement] }}</span>
+              }
+            </div>
+            <div class="vedette-card__corps">
+              <span class="vedette-card__lieu">{{ labelQuartier(bien.quartier) }} · {{ labelsCategorie[bien.categorie] }}</span>
+              <h3>{{ bien.titre }}</h3>
+              <span class="vedette-card__prix">{{ formatPrix(bien.prix) }} FCFA{{ bien.type !== 'VENTE' ? ' / mois' : '' }}</span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+}
 
 <!-- ===== MISSION ===== -->
 <section class="mission">
@@ -145,11 +166,40 @@
       <h2 class="mission__titre">Préserver, Construire, Loger</h2>
     </div>
     <div class="mission__grille">
-      @for (m of mission; track m.titre) {
+      @for (m of c.mission; track $index) {
         <div class="mission-item">
-          <span class="mission-item__lettre">{{ m.lettre }}</span>
+          <span class="mission-item__lettre">{{ m.titre.charAt(0) }}</span>
           <h3>{{ m.titre }}</h3>
           <p>{{ m.texte }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ===== A VENIR ===== -->
+<section class="a-venir">
+  <div class="container">
+    <div class="vedette__entete">
+      <div>
+        <span class="chapitre__nom">Vision d'aménagement</span>
+        <h2 class="vedette__titre">À venir sur le domaine</h2>
+        <p class="a-venir__note">Projets futurs, ni financés ni construits à ce jour.</p>
+      </div>
+      <a routerLink="/vision" class="chapitre__lien">
+        Découvrir la vision
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="a-venir__grille">
+      @for (p of c.projetsAVenir; track $index) {
+        <div class="a-venir-card">
+          <div class="a-venir-card__haut">
+            <span class="a-venir-card__statut">{{ p.statut }}</span>
+            <span class="a-venir-card__surface">{{ p.surface }}</span>
+          </div>
+          <h3>{{ p.nom }}</h3>
+          <p>{{ p.texte }}</p>
         </div>
       }
     </div>
@@ -160,13 +210,10 @@
 <section class="cta-final">
   <div class="container cta-final__inner">
     <h2 class="cta-final__titre">
-      Où que vous soyez,<br>
-      <em>votre place vous attend à Songon.</em>
+      {{ c.finalTitre }}<br>
+      <em>{{ c.finalTitreItalique }}</em>
     </h2>
-    <p class="cta-final__texte">
-      Notre équipe accompagne les acquéreurs à distance — en France, au Canada ou ailleurs —
-      de la première question jusqu'à la signature.
-    </p>
+    <p class="cta-final__texte">{{ c.finalTexte }}</p>
     <div class="cta-final__actions">
       <a routerLink="/acheter-louer" class="hero__btn-primary">Explorer les résidences</a>
       <a routerLink="/contact" class="hero__btn-ghost hero__btn-ghost--clair">Parler à un conseiller</a>

@@ -1,0 +1,160 @@
+@if (chargement) {
+  <p class="etat">Chargement...</p>
+} @else if (!page) {
+  <p class="etat etat--erreur">Page inconnue. <a routerLink="/admin/pages">Retour aux pages</a></p>
+} @else {
+  <div class="page-entete">
+    <div>
+      <a routerLink="/admin/pages" class="retour">← Pages du site</a>
+      <h1>Page {{ page.nom }}</h1>
+      <p>{{ page.description }}</p>
+    </div>
+    <a [href]="page.lien" target="_blank" rel="noopener" class="btn-action btn-action--ghost">Voir la page ↗</a>
+  </div>
+
+  @if (message) { <div class="message-ok">{{ message }}</div> }
+  @if (erreur) { <div class="etat etat--erreur">{{ erreur }}</div> }
+
+  <div class="sections">
+    @for (section of page.sections; track section.titre; let s = $index) {
+      <section class="section" [class.section--ouverte]="sectionOuverte === s">
+        <button type="button" class="section__entete" (click)="sectionOuverte = sectionOuverte === s ? -1 : s">
+          <span class="section__num">{{ s + 1 }}</span>
+          <h2>{{ section.titre }}</h2>
+          <span class="section__chevron">{{ sectionOuverte === s ? '−' : '+' }}</span>
+        </button>
+
+        @if (sectionOuverte === s) {
+          <div class="section__corps">
+            @for (champ of section.champs; track champ.cle) {
+              <ng-container *ngTemplateOutlet="rendu; context: { objet: valeur, champ: champ, id: champ.cle }"></ng-container>
+            }
+          </div>
+        }
+      </section>
+    }
+  </div>
+
+  <div class="barre-enregistrer" [class.barre-enregistrer--active]="modifie">
+    <span>{{ modifie ? 'Modifications non enregistrées' : 'Tout est enregistré' }}</span>
+    <div>
+      <button type="button" class="btn-action btn-action--ghost" (click)="reinitialiser()">Textes par défaut</button>
+      <button type="button" class="btn-action" (click)="enregistrer()" [disabled]="enregistrement || !modifie">
+        {{ enregistrement ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </div>
+}
+
+<!-- Rendu d'un champ selon son type -->
+<ng-template #rendu let-objet="objet" let-champ="champ" let-id="id">
+  @switch (champ.type) {
+    @case ('texte') {
+      <div class="form-champ">
+        <label>{{ champ.label }}</label>
+        <input [(ngModel)]="objet[champ.cle]" (ngModelChange)="changer()">
+        @if (champ.aide) { <small>{{ champ.aide }}</small> }
+      </div>
+    }
+    @case ('zone') {
+      <div class="form-champ">
+        <label>{{ champ.label }}</label>
+        <textarea rows="3" [(ngModel)]="objet[champ.cle]" (ngModelChange)="changer()"></textarea>
+        @if (champ.aide) { <small>{{ champ.aide }}</small> }
+      </div>
+    }
+    @case ('case') {
+      <label class="case">
+        <input type="checkbox" [(ngModel)]="objet[champ.cle]" (ngModelChange)="changer()">
+        {{ champ.label }}
+      </label>
+    }
+    @case ('etape') {
+      <div class="form-champ">
+        <label>{{ champ.label }}</label>
+        <div class="etapes">
+          @for (e of etapes; track e; let i = $index) {
+            <button type="button" class="etapes__bouton" [class.actif]="objet[champ.cle] === i" (click)="objet[champ.cle] = i; changer()">{{ e }}</button>
+          }
+        </div>
+      </div>
+    }
+    @case ('image') {
+      <div class="form-champ">
+        <label>{{ champ.label }}</label>
+        <div class="image">
+          @if (objet[champ.cle]) {
+            <img [src]="objet[champ.cle]" alt="">
+          } @else {
+            <span class="image__vide">Aucune image</span>
+          }
+          <label class="btn-action btn-action--ghost btn-action--petit image__bouton">
+            <input type="file" accept="image/png,image/jpeg,image/webp" (change)="envoyerImage($event, objet, champ.cle, id)" hidden>
+            {{ envoiEnCours === id ? 'Envoi...' : 'Changer l\'image' }}
+          </label>
+        </div>
+      </div>
+    }
+    @case ('liste-images') {
+      <div class="form-champ">
+        <label>{{ champ.label }}</label>
+        @if (champ.aide) { <small>{{ champ.aide }}</small> }
+        <div class="images">
+          @for (img of objet[champ.cle]; track $index; let i = $index; let premier = $first; let dernier = $last) {
+            <div class="images__item">
+              <img [src]="img" alt="">
+              <div class="images__actions">
+                <button type="button" (click)="deplacer(objet[champ.cle], i, -1)" [disabled]="premier" aria-label="Avancer">←</button>
+                <button type="button" (click)="deplacer(objet[champ.cle], i, 1)" [disabled]="dernier" aria-label="Reculer">→</button>
+                <button type="button" (click)="retirer(objet[champ.cle], i)" aria-label="Retirer">×</button>
+              </div>
+            </div>
+          }
+          <label class="images__ajout">
+            <input type="file" accept="image/png,image/jpeg,image/webp" (change)="ajouterImage($event, objet[champ.cle], id + '-ajout')" hidden>
+            {{ envoiEnCours === id + '-ajout' ? 'Envoi...' : '+ Ajouter une photo' }}
+          </label>
+        </div>
+      </div>
+    }
+    @case ('liste-textes') {
+      <div class="form-champ">
+        <label>{{ champ.label }}</label>
+        @for (t of objet[champ.cle]; track suivreIndex(i); let i = $index) {
+          <div class="ligne-texte">
+            <input [ngModel]="objet[champ.cle][i]" (ngModelChange)="objet[champ.cle][i] = $event; changer()">
+            <button type="button" class="mini" (click)="retirer(objet[champ.cle], i)" aria-label="Retirer">×</button>
+          </div>
+        }
+        <button type="button" class="ajout" (click)="ajouterTexte(objet[champ.cle])">+ Ajouter une ligne</button>
+      </div>
+    }
+    @case ('liste') {
+      <div class="liste">
+        <span class="liste__titre">{{ champ.label }}</span>
+        @for (item of objet[champ.cle]; track $index; let i = $index; let premier = $first; let dernier = $last) {
+          <div class="liste__item">
+            <div class="liste__entete">
+              <strong>{{ item.nom || item.titre || item.label || (champ.label + ' ' + (i + 1)) }}</strong>
+              @if (!champ.fixe) {
+                <div class="liste__actions">
+                  <button type="button" class="mini" (click)="deplacer(objet[champ.cle], i, -1)" [disabled]="premier" aria-label="Monter">↑</button>
+                  <button type="button" class="mini" (click)="deplacer(objet[champ.cle], i, 1)" [disabled]="dernier" aria-label="Descendre">↓</button>
+                  <button type="button" class="mini mini--danger" (click)="retirer(objet[champ.cle], i)" aria-label="Retirer">×</button>
+                </div>
+              }
+            </div>
+            <div class="liste__champs">
+              @for (sous of champ.champs; track sous.cle) {
+                <ng-container *ngTemplateOutlet="rendu; context: { objet: item, champ: sous, id: id + '-' + i + '-' + sous.cle }"></ng-container>
+              }
+            </div>
+          </div>
+        }
+        @if (!champ.fixe) {
+          <button type="button" class="ajout" (click)="ajouter(objet[champ.cle], champ)">+ Ajouter</button>
+        }
+      </div>
+    }
+  }
+</ng-template>

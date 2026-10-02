@@ -1,0 +1,63 @@
+<div class="page-entete">
+  <div>
+    <h1>Paramètres</h1>
+    <p>Les coordonnées affichées sur la page Contact et dans le pied de page.</p>
+  </div>
+</div>
+
+@if (chargement) {
+  <p class="etat">Chargement...</p>
+} @else {
+  <form class="form-carte" [formGroup]="form" (ngSubmit)="enregistrer()">
+    @if (message) { <div class="message-ok">{{ message }}</div> }
+    @if (erreur) { <div class="etat etat--erreur">{{ erreur }}</div> }
+
+    <h2 class="form-section">Coordonnées</h2>
+
+    <div class="form-champ">
+      <label for="localisation">Localisation</label>
+      <input id="localisation" formControlName="localisation" placeholder="Songon Agban, Côte d'Ivoire">
+    </div>
+
+    <div class="form-ligne">
+      <div class="form-champ">
+        <label for="email">Email de contact</label>
+        <input id="email" type="email" formControlName="email" placeholder="contact@exemple.com">
+        <small>Laissez vide pour ne pas l'afficher.</small>
+      </div>
+      <div class="form-champ">
+        <label for="telephone">Téléphone</label>
+        <input id="telephone" type="tel" formControlName="telephone" placeholder="+225 07 00 00 00 00">
+        <small>Laissez vide pour ne pas l'afficher.</small>
+      </div>
+    </div>
+
+    <div class="form-champ">
+      <label for="whatsapp">Numéro WhatsApp</label>
+      <input id="whatsapp" type="tel" formControlName="whatsapp" placeholder="+225 07 00 00 00 00">
+      <small>Avec l'indicatif du pays. Un lien direct vers WhatsApp sera proposé aux visiteurs.</small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-action" [disabled]="enregistrement">
+        {{ enregistrement ? 'Enregistrement...' : 'Enregistrer' }}
+      </button>
+    </div>
+  </form>
+
+  <section class="form-carte zone-demo">
+    <h2 class="form-section">Contenu de démonstration</h2>
+    @if (messageDemo) { <div class="message-ok">{{ messageDemo }}</div> }
+    @if (demoActive) {
+      <p>
+        Le site contient des biens et des articles fictifs, signalés par l'étiquette « Site de démonstration ».
+        Supprimez-les le jour du lancement : seuls les contenus de démonstration sont effacés, jamais les vôtres.
+      </p>
+      <button type="button" class="btn-action btn-action--danger" (click)="purgerDemo()" [disabled]="purgeEnCours">
+        {{ purgeEnCours ? 'Suppression...' : 'Supprimer la démonstration' }}
+      </button>
+    } @else {
+      <p>Aucun contenu de démonstration sur le site.</p>
+    }
+  </section>
+}

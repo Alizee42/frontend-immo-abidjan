@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ParametresService } from '../../core/services/parametres.service';
 
 @Component({
   selector: 'app-footer',
@@ -8,5 +9,14 @@ import { RouterLink } from '@angular/router';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+  private parametres = inject(ParametresService);
+
+  constructor() {
+    this.parametres.charger();
+  }
+
+  get coordonnees() {
+    return this.parametres.coordonnees();
+  }
   annee = new Date().getFullYear();
 }

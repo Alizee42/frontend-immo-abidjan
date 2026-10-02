@@ -28,13 +28,21 @@
       <h4 class="footer__titre">Nous joindre</h4>
       <ul class="footer__infos">
         <li>
-          <span>Adresse</span>
-          Abidjan, Côte d'Ivoire
+          <span>Localisation</span>
+          {{ coordonnees.localisation }}
         </li>
-        <li>
-          <span>Email</span>
-          contact&#64;immoabidjan.com
-        </li>
+        @if (coordonnees.email) {
+          <li>
+            <span>Email</span>
+            <a [href]="'mailto:' + coordonnees.email">{{ coordonnees.email }}</a>
+          </li>
+        }
+        @if (coordonnees.telephone) {
+          <li>
+            <span>Téléphone</span>
+            <a [href]="'tel:' + coordonnees.telephone">{{ coordonnees.telephone }}</a>
+          </li>
+        }
       </ul>
       <a routerLink="/contact" class="footer__cta">Prendre contact</a>
     </div>

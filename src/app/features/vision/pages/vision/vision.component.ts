@@ -2,6 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SeoService } from '../../../../core/services/seo.service';
+import { PropertyService } from '../../../../core/services/property.service';
+import { ContenuService } from '../../../../core/services/contenu.service';
+import { DEFAUT_VISION, ETAPES_PROJET } from '../../../../core/config/contenus';
 
 @Component({
   selector: 'app-vision',
@@ -11,11 +14,38 @@ import { SeoService } from '../../../../core/services/seo.service';
 })
 export class VisionComponent implements OnInit {
   private seo = inject(SeoService);
+  private propertyService = inject(PropertyService);
+  private contenus = inject(ContenuService);
+
+  // Textes et images de la page, modifiables depuis l'admin
+  c = DEFAUT_VISION;
+
+  // Biens disponibles par quartier, calculés depuis l'API (null tant que non chargé)
+  statsSobe: Record<string, { disponibles: number; terrains: number; maisons: number }> | null = null;
 
   ngOnInit() {
+    this.contenus.lire('vision', DEFAUT_VISION).subscribe((c) => (this.c = c));
+
     this.seo.definir({
       titre: 'Vision',
       description: 'La vision foncière et immobilière de la SCI-AGD à Songon Agban : 124 hectares, un programme de 20 hectares porté par la mission Préserver, Construire, Loger.',
+    });
+
+    this.propertyService.getAll({ status: 'DISPONIBLE' }).subscribe({
+      next: (biens) => {
+        const stats: Record<string, { disponibles: number; terrains: number; maisons: number }> = {};
+        for (const q of this.c.sobe) {
+          const duQuartier = biens.filter((b) => b.quartier === q.quartier);
+          stats[q.quartier] = {
+            disponibles: duQuartier.length,
+            terrains: duQuartier.filter((b) => b.categorie === 'TERRAIN_VIABILISE').length,
+            maisons: duQuartier.filter((b) => b.categorie === 'MAISON_CLES_EN_MAIN').length,
+          };
+        }
+        this.statsSobe = stats;
+      },
+      // Sans API, les compteurs restent simplement masqués
+      error: () => (this.statsSobe = null),
     });
   }
 
@@ -26,81 +56,50 @@ export class VisionComponent implements OnInit {
     { valeur: '3', label: 'Frères fondateurs' },
   ];
 
+  // Proportions de la barre de répartition (surfaces en hectares)
+  barreDomaine = [
+    { nom: 'Programme immobilier', ha: 20, classe: 'programme' },
+    { nom: 'Réserve foncière', ha: 104, classe: 'reserve' },
+  ];
+
+  barreProgramme = [
+    { nom: 'SOBE 1, 2 et 3', ha: 12, classe: 'sobe' },
+    { nom: 'Centre commercial', ha: 3, classe: 'commerce' },
+    { nom: 'Hôtel', ha: 0.3, classe: 'hotel' },
+    { nom: 'Non affecté', ha: 4.7, classe: 'libre' },
+  ];
+
   repartition = [
     {
       nom: 'SOBE 1, 2 et 3',
       surface: '12 ha',
-      statut: 'en-cours',
-      statutLabel: 'Quartiers résidentiels',
-      description: 'Trois quartiers résidentiels formant le cœur du programme, avec un potentiel global de plus de 400 logements.',
+      classe: 'sobe',
+      statut: 'neutre',
+      statutLabel: 'Cœur résidentiel',
     },
     {
       nom: 'Centre commercial familial',
       surface: '3 ha',
+      classe: 'commerce',
       statut: 'etude',
       statutLabel: 'Projet à l\'étude',
-      description: 'Un retail park de proximité pensé pour se développer progressivement : commerces, restauration, loisirs familiaux.',
     },
     {
       nom: 'Projet hôtelier de Songon',
       surface: '3 000 m²',
+      classe: 'hotel',
       statut: 'etude',
       statutLabel: 'Concept à préciser',
-      description: 'Une emprise réservée pour un futur projet hôtelier. Positionnement, capacité et calendrier restent à définir.',
     },
     {
       nom: 'Réserve non affectée',
       surface: '4,7 ha',
+      classe: 'libre',
       statut: 'reserve',
       statutLabel: 'Destination future non déterminée',
-      description: 'Une part du programme volontairement non affectée, en attente d\'une orientation future.',
     },
   ];
 
-  sobe = [
-    {
-      num: '01',
-      nom: 'SOBE 1',
-      description: 'Premier quartier résidentiel du programme, cœur historique du projet.',
-      couleur: '#2E8B57',
-      statut: 'Terrains viabilisés, maisons clés en main — vente, location et location-vente.',
-    },
-    {
-      num: '02',
-      nom: 'SOBE 2',
-      description: 'Second quartier résidentiel, pensé en continuité avec SOBE 1.',
-      couleur: '#1A3C6E',
-      statut: 'Terrains viabilisés, maisons clés en main — vente, location et location-vente.',
-    },
-    {
-      num: '03',
-      nom: 'SOBE 3',
-      description: 'Troisième quartier résidentiel du domaine.',
-      couleur: '#B8860B',
-      statut: 'Terrains viabilisés, maisons clés en main — vente, location et location-vente.',
-    },
-  ];
+  etapes = ETAPES_PROJET;
 
-  atouts = [
-    {
-      titre: 'Foncier sécurisé juridiquement',
-      texte: 'Le domaine de 124 hectares est couvert par un ACD. La réserve foncière est préservée et distincte du programme immobilier engagé.',
-      svg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-    },
-    {
-      titre: 'Vision familiale',
-      texte: 'La SCI-AGD est portée par trois frères originaires de Songon Agban, autour d\'une mission commune : Préserver, Construire, Loger.',
-      svg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
-    },
-    {
-      titre: 'Vente et location',
-      texte: 'Que vous souhaitiez acheter pour habiter, louer ou investir, les quartiers SOBE proposent plusieurs formules.',
-      svg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
-    },
-    {
-      titre: 'Accessibilité internationale',
-      texte: 'Démarches possibles à distance pour les acquéreurs de la diaspora africaine et internationale.',
-      svg: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
-    },
-  ];
 }

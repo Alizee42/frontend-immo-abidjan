@@ -157,3 +157,48 @@ img {
     font-size: 1.6rem;
   }
 }
+
+// ===== EN-TÊTE DES PAGES INTÉRIEURES =====
+.entete {
+  padding: 160px 0 100px;
+  text-align: center;
+  color: #F4F1EA;
+  background:
+    radial-gradient(ellipse at top, rgba(201, 168, 118, 0.14), transparent 60%),
+    linear-gradient(180deg, #070D16 0%, #101B2C 100%);
+
+  // Variante quand le contenu de la page remonte sur l'en-tête
+  &--chevauche { padding-bottom: 150px; }
+
+  &__surtitre {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #DFC69A;
+  }
+
+  &__titre {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 3.2rem;
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 16px 0 18px;
+
+    em { font-style: italic; color: #C9A876; }
+  }
+
+  &__texte {
+    max-width: 580px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(244, 241, 234, 0.75);
+  }
+}
+
+@media (max-width: 768px) {
+  .entete { padding: 120px 0 72px; }
+  .entete--chevauche { padding-bottom: 120px; }
+  .entete__titre { font-size: 2.3rem; }
+}

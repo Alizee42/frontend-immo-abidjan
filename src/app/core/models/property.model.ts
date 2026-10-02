@@ -44,6 +44,31 @@ export interface PropertyFilter {
   status?: PropertyStatus;
   categorie?: Categorie;
   avancement?: Avancement;
+  tri?: 'recent' | 'prix_asc' | 'prix_desc';
   prixMin?: number;
   prixMax?: number;
+}
+
+// Image affichée pour un bien : sa première photo, sinon une image par défaut selon sa catégorie
+export function imageBien(bien: Pick<Property, 'photos' | 'categorie'>): string {
+  if (bien.photos?.length) return bien.photos[0];
+  return bien.categorie === 'TERRAIN_VIABILISE' ? '/images/defaut/terrain.jpg' : '/images/defaut/maison.jpg';
+}
+
+export const LABELS_QUARTIER: Record<Quartier, string> = {
+  QUARTIER_1: 'SOBE 1',
+  QUARTIER_2: 'SOBE 2',
+  QUARTIER_3: 'SOBE 3',
+};
+
+export const LABELS_STATUS: Record<PropertyStatus, string> = {
+  DISPONIBLE: 'Disponible',
+  RESERVE: 'Réservé',
+  VENDU: 'Vendu',
+  LOUE: 'Loué',
+};
+
+// Toutes les images d'un bien, avec l'image par défaut s'il n'a aucune photo
+export function imagesBien(bien: Pick<Property, 'photos' | 'categorie'>): string[] {
+  return bien.photos?.length ? bien.photos : [imageBien(bien)];
 }

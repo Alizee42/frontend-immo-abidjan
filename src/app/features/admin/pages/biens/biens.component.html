@@ -22,6 +22,7 @@
   <table class="table-liste">
     <thead>
       <tr>
+        <th></th>
         <th>Titre</th>
         <th>Quartier</th>
         <th>Type</th>
@@ -36,6 +37,7 @@
     <tbody>
       @for (bien of biens; track bien.id) {
         <tr>
+          <td class="miniature-cellule"><img class="miniature" [src]="imageBien(bien)" [alt]="bien.titre" loading="lazy"></td>
           <td>{{ bien.titre }}</td>
           <td>{{ labelQuartier(bien.quartier) }}</td>
           <td>{{ labelsType[bien.type] }}</td>

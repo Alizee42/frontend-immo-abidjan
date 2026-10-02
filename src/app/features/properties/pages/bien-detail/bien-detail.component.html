@@ -1,0 +1,140 @@
+@if (chargement) {
+  <div class="etat"><div class="spinner"></div></div>
+}
+
+@if (!chargement && introuvable) {
+  <div class="etat">
+    <h1>Bien introuvable</h1>
+    <p>Ce bien n'existe pas ou n'est plus en ligne.</p>
+    <a routerLink="/acheter-louer" class="btn-primary">Voir tous les biens</a>
+  </div>
+}
+
+@if (!chargement && bien; as b) {
+  <section class="fiche">
+    <div class="container">
+      <a routerLink="/acheter-louer" class="fiche__retour">← Tous les biens</a>
+
+      <!-- GALERIE -->
+      <div class="galerie" [class.galerie--unique]="images.length === 1">
+        <button type="button" class="galerie__principale" (click)="ouvrirLightbox(0)" aria-label="Agrandir la photo">
+          <img [src]="images[0]" [alt]="b.titre">
+          <span class="galerie__badges">
+            <span class="badge-type" [class]="'badge-type badge-type--' + b.type.toLowerCase()">{{ labelsType[b.type] }}</span>
+            @if (b.avancement !== 'LIVRE') {
+              <span class="badge-avancement">{{ labelsAvancement[b.avancement] }}</span>
+            }
+          </span>
+        </button>
+        @if (images.length > 1) {
+          <div class="galerie__vignettes">
+            @for (img of images.slice(1, 5); track img; let i = $index) {
+              <button type="button" class="galerie__vignette" (click)="ouvrirLightbox(i + 1)" aria-label="Agrandir la photo">
+                <img [src]="img" [alt]="b.titre + ' — photo ' + (i + 2)" loading="lazy">
+                @if (i === 3 && images.length > 5) {
+                  <span class="galerie__plus">+{{ images.length - 5 }}</span>
+                }
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="fiche__grille">
+        <!-- INFOS -->
+        <div class="fiche__contenu">
+          <span class="fiche__lieu">{{ labelsQuartier[b.quartier] }} · Domaine de Songon Agban</span>
+          <h1 class="fiche__titre">{{ b.titre }}</h1>
+
+          <div class="caracteristiques">
+            <div><span>Catégorie</span><strong>{{ labelsCategorie[b.categorie] }}</strong></div>
+            <div><span>Formule</span><strong>{{ labelsType[b.type] }}</strong></div>
+            <div><span>Avancement</span><strong>{{ labelsAvancement[b.avancement] }}</strong></div>
+            @if (b.superficie) {
+              <div><span>Surface</span><strong>{{ b.superficie }} m²</strong></div>
+            }
+            @if (b.nombreChambres) {
+              <div><span>Chambres</span><strong>{{ b.nombreChambres }}</strong></div>
+            }
+            @if (b.nombreSallesDeBain) {
+              <div><span>Salles de bain</span><strong>{{ b.nombreSallesDeBain }}</strong></div>
+            }
+          </div>
+
+          @if (b.description) {
+            <h2>Description</h2>
+            <p class="fiche__description">{{ b.description }}</p>
+          }
+
+          @if (b.avancement === 'PREVU') {
+            <p class="fiche__avertissement">
+              Ce bien fait partie d'une tranche prévue : il n'est pas encore construit. Surface, prix et calendrier
+              peuvent évoluer.
+            </p>
+          }
+          @if (b.avancement === 'EN_TRAVAUX') {
+            <p class="fiche__avertissement">
+              Ce bien est en cours de réalisation. Contactez-nous pour connaître la date de livraison prévue.
+            </p>
+          }
+        </div>
+
+        <!-- CONTACT -->
+        <aside class="contact-carte">
+          <span class="contact-carte__statut" [class]="'contact-carte__statut contact-carte__statut--' + b.status.toLowerCase()">
+            {{ labelsStatus[b.status] }}
+          </span>
+          <span class="contact-carte__libelle">{{ libellePrix }}</span>
+          <div class="contact-carte__prix">{{ formatPrix(b.prix) }} FCFA<small>{{ unitePrix }}</small></div>
+
+          @if (estVenteOuLoue) {
+            <p class="contact-carte__texte">Ce bien n'est plus disponible. Découvrez les biens similaires ci-dessous.</p>
+            <a routerLink="/acheter-louer" [queryParams]="{ quartier: b.quartier }" class="btn-primary contact-carte__btn">
+              Voir les biens de {{ labelsQuartier[b.quartier] }}
+            </a>
+          } @else {
+            <p class="contact-carte__texte">Une question, une visite, les modalités de paiement ? Nous vous répondons, sur place comme à distance.</p>
+            <a routerLink="/contact" [queryParams]="{ bien: b.id }" class="btn-primary contact-carte__btn">
+              Demander des informations
+            </a>
+          }
+          <span class="contact-carte__ref">Référence du bien : {{ b.id }}</span>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMILAIRES -->
+  @if (similaires.length > 0) {
+    <section class="similaires">
+      <div class="container">
+        <h2>Autres biens à {{ labelsQuartier[b.quartier] }}</h2>
+        <div class="similaires__grille">
+          @for (s of similaires; track s.id) {
+            <a [routerLink]="['/acheter-louer', s.id]" class="similaire">
+              <img [src]="imageBien(s)" [alt]="s.titre" loading="lazy">
+              <div class="similaire__corps">
+                <span>{{ labelsCategorie[s.categorie] }} · {{ labelsType[s.type] }}</span>
+                <h3>{{ s.titre }}</h3>
+                <strong>{{ formatPrix(s.prix) }} FCFA{{ s.type !== 'VENTE' ? ' / mois' : '' }}</strong>
+              </div>
+            </a>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- LIGHTBOX -->
+  @if (lightboxOuverte) {
+    <div class="lightbox" (click)="fermerLightbox()" role="dialog" aria-modal="true">
+      <button type="button" class="lightbox__fermer" (click)="fermerLightbox()" aria-label="Fermer">×</button>
+      @if (images.length > 1) {
+        <button type="button" class="lightbox__nav lightbox__nav--prec" (click)="precedente($event)" aria-label="Photo précédente">‹</button>
+        <button type="button" class="lightbox__nav lightbox__nav--suiv" (click)="suivante($event)" aria-label="Photo suivante">›</button>
+      }
+      <img [src]="images[imageActive]" [alt]="b.titre" (click)="$event.stopPropagation()">
+      <span class="lightbox__compteur">{{ imageActive + 1 }} / {{ images.length }}</span>
+    </div>
+  }
+}

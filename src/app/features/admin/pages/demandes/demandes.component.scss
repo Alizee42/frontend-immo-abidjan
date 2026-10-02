@@ -1,0 +1,128 @@
+@use '../../admin-shared.scss';
+
+.onglets {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 20px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #ECE6DA;
+
+  button {
+    padding: 8px 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #4A5463;
+    cursor: pointer;
+
+    span {
+      margin-left: 6px;
+      padding: 1px 7px;
+      border-radius: 999px;
+      background: #F6F3EC;
+      font-size: 0.75rem;
+    }
+
+    &.actif {
+      background: #070D16;
+      color: #F4F1EA;
+
+      span { background: #C9A876; color: #070D16; }
+    }
+  }
+}
+
+.demandes {
+  display: grid;
+  gap: 10px;
+}
+
+.demande {
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #ECE6DA;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+
+  &:hover, &--ouverte { border-color: #C9A876; }
+  &--traitee { opacity: 0.7; }
+
+  &__resume {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto minmax(160px, 220px) auto 70px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #EFE9DD;
+    color: #B08D57;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+
+  &__qui {
+    strong { display: block; font-size: 0.92rem; color: #070D16; }
+    small { font-size: 0.78rem; color: #7A8492; }
+  }
+
+  &__apercu {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 0.88rem;
+    color: #7A8492;
+  }
+
+  &__chevron { color: #B08D57; }
+
+  &__detail { padding: 4px 18px 20px 72px; }
+
+  &__message {
+    white-space: pre-line;
+    line-height: 1.7;
+    color: #1F2733;
+    margin-bottom: 14px;
+  }
+
+  &__coordonnees {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+
+    a { color: #B08D57; font-weight: 600; }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 860px) {
+  .demande__resume { grid-template-columns: auto 1fr auto auto; }
+  .demande__apercu, .demande__resume > .pill { display: none; }
+  .demande__detail { padding-left: 18px; }
+}

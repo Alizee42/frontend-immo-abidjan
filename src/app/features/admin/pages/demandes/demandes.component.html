@@ -1,0 +1,64 @@
+<div class="page-entete">
+  <div>
+    <h1>Demandes de contact</h1>
+    <p>Les messages envoyés depuis le formulaire du site.</p>
+  </div>
+</div>
+
+<div class="onglets">
+  <button type="button" [class.actif]="filtre === 'a-traiter'" (click)="filtre = 'a-traiter'">À traiter <span>{{ compte('a-traiter') }}</span></button>
+  <button type="button" [class.actif]="filtre === 'traitees'" (click)="filtre = 'traitees'">Traitées <span>{{ compte('traitees') }}</span></button>
+  <button type="button" [class.actif]="filtre === 'toutes'" (click)="filtre = 'toutes'">Toutes <span>{{ compte('toutes') }}</span></button>
+</div>
+
+@if (chargement) {
+  <p class="etat">Chargement...</p>
+} @else if (erreur) {
+  <p class="etat etat--erreur">Impossible de charger les demandes.</p>
+} @else if (visibles.length === 0) {
+  <p class="etat">{{ filtre === 'a-traiter' ? 'Aucune demande à traiter. Tout est à jour.' : 'Aucune demande.' }}</p>
+} @else {
+  <div class="demandes">
+    @for (d of visibles; track d.id) {
+      <article class="demande" [class.demande--traitee]="d.traite" [class.demande--ouverte]="ouverte === d.id">
+        <button type="button" class="demande__resume" (click)="basculer(d.id)">
+          <span class="demande__avatar">{{ d.prenom.charAt(0) }}{{ d.nom.charAt(0) }}</span>
+          <span class="demande__qui">
+            <strong>{{ d.prenom }} {{ d.nom }}</strong>
+            <small>{{ d.paysResidence || 'Pays non précisé' }} · {{ d.createdAt | date: 'd MMM yyyy, HH:mm' }}</small>
+          </span>
+          <span class="pill pill--or">{{ labelSujet(d.sujet) }}</span>
+          <span class="demande__etat">
+            @if (!d.traite) { <span class="pill pill--vert">Nouveau</span> }
+          </span>
+          <span class="demande__apercu">{{ d.message }}</span>
+          <span class="demande__chevron">{{ ouverte === d.id ? '▴' : '▾' }}</span>
+        </button>
+
+        @if (ouverte === d.id) {
+          <div class="demande__detail">
+            <p class="demande__message">{{ d.message }}</p>
+            <div class="demande__coordonnees">
+              <a [href]="'mailto:' + d.email">{{ d.email }}</a>
+              @if (d.telephone) {
+                <a [href]="'tel:' + d.telephone">{{ d.telephone }}</a>
+              }
+            </div>
+            <div class="demande__actions">
+              <a [href]="lienEmail(d)" class="btn-action btn-action--petit">Répondre par email</a>
+              @if (lienWhatsapp(d); as wa) {
+                <a [href]="wa" target="_blank" rel="noopener" class="btn-action btn-action--ghost btn-action--petit">WhatsApp</a>
+              }
+              @if (d.traite) {
+                <button type="button" class="btn-action btn-action--ghost btn-action--petit" (click)="marquer(d, false)">Remettre à traiter</button>
+              } @else {
+                <button type="button" class="btn-action btn-action--ghost btn-action--petit" (click)="marquer(d, true)">Marquer comme traitée</button>
+              }
+              <button type="button" class="btn-action btn-action--danger btn-action--petit" (click)="supprimer(d)">Supprimer</button>
+            </div>
+          </div>
+        }
+      </article>
+    }
+  </div>
+}

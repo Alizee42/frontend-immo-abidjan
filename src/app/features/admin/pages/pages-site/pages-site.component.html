@@ -1,0 +1,22 @@
+<div class="page-entete">
+  <div>
+    <h1>Pages du site</h1>
+    <p>Modifiez les textes et les images de chaque page. Les biens et les articles se gèrent dans leurs rubriques.</p>
+  </div>
+</div>
+
+<div class="cartes-pages">
+  @for (p of pages; track p.cle) {
+    <a [routerLink]="['/admin/pages', p.cle]" class="carte-page">
+      <span class="carte-page__nom">{{ p.nom }}</span>
+      <p>{{ p.description }}</p>
+      <span class="carte-page__sections">{{ p.sections.length }} sections</span>
+      <span class="carte-page__fleche">Modifier →</span>
+    </a>
+  }
+  <a routerLink="/admin/parametres" class="carte-page carte-page--secondaire">
+    <span class="carte-page__nom">Coordonnées</span>
+    <p>Email, téléphone, WhatsApp et localisation affichés sur la page Contact et dans le pied de page.</p>
+    <span class="carte-page__fleche">Modifier →</span>
+  </a>
+</div>

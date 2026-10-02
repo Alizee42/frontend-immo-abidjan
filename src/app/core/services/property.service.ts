@@ -16,6 +16,7 @@ export class PropertyService {
     if (filters?.status) params = params.set('status', filters.status);
     if (filters?.categorie) params = params.set('categorie', filters.categorie);
     if (filters?.avancement) params = params.set('avancement', filters.avancement);
+    if (filters?.tri) params = params.set('tri', filters.tri);
     return this.http.get<Property[]>(this.apiUrl, { params });
   }
 

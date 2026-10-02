@@ -1,1 +1,11 @@
 @use '../../admin-shared.scss';
+
+.miniature-cellule { width: 76px; padding-right: 0 !important; }
+
+.miniature {
+  width: 64px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}

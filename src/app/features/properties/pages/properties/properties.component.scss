@@ -1,23 +1,3 @@
-.page-header {
-  background: linear-gradient(160deg, #0A1F3D, #112B50);
-  padding: 140px 0 80px;
-  text-align: center;
-  color: var(--blanc);
-
-  &__titre {
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin: 12px 0 16px;
-  }
-
-  &__sous-titre {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.8);
-    max-width: 560px;
-    margin: 0 auto;
-  }
-}
-
 // ===== FILTRES =====
 .filtres-section {
   background: var(--blanc);
@@ -74,10 +54,40 @@
 }
 
 // ===== RESULTATS =====
+.resultats-barre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
 .nb-resultats {
   font-size: 0.9rem;
   color: var(--texte-clair);
-  margin-bottom: 24px;
+}
+
+.tri {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--texte-clair);
+}
+
+// Bouton d'ouverture des filtres, visible uniquement sur mobile
+.filtres-toggle {
+  display: none;
+  width: 100%;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid var(--gris-bordure);
+  border-radius: 10px;
+  background: var(--blanc);
+  font-weight: 600;
+  color: var(--bleu);
+  cursor: pointer;
 }
 
 // ===== GRILLE =====
@@ -100,6 +110,7 @@
   }
 
   &__image {
+    display: block;
     position: relative;
     aspect-ratio: 16/10;
     overflow: hidden;
@@ -196,6 +207,17 @@
     font-weight: 600;
     color: var(--bleu);
     margin-bottom: 8px;
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  }
+
+  // Biens vendus ou loués : visibles mais en retrait
+  &--indisponible {
+    opacity: 0.6;
+    filter: grayscale(0.6);
+
+    &:hover { opacity: 0.85; }
   }
 
   &__desc {
@@ -300,8 +322,10 @@
 
 @media (max-width: 640px) {
   .biens-grille { grid-template-columns: 1fr; }
-  .filtres { flex-direction: column; align-items: stretch; }
+  .filtres-toggle { display: flex; }
+  .filtres { display: none; flex-direction: column; align-items: stretch; margin-top: 12px; }
+  .filtres--ouverts { display: flex; }
+  .filtres-section { position: static; }
   .filtre-select { min-width: unset; }
   .filtre-reset { margin-left: 0; }
-  .page-header__titre { font-size: 2rem; }
 }

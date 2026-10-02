@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { PropertyService } from '../../../../core/services/property.service';
-import { LABELS_AVANCEMENT, LABELS_CATEGORIE, LABELS_TYPE, Property, PropertyStatus, Quartier } from '../../../../core/models/property.model';
+import { LABELS_AVANCEMENT, LABELS_CATEGORIE, LABELS_TYPE, Property, PropertyStatus, Quartier, imageBien } from '../../../../core/models/property.model';
 
 @Component({
   selector: 'app-admin-biens',
@@ -21,6 +21,7 @@ export class BiensComponent implements OnInit {
   labelsType = LABELS_TYPE;
   labelsCategorie = LABELS_CATEGORIE;
   labelsAvancement = LABELS_AVANCEMENT;
+  imageBien = imageBien;
 
   ngOnInit() {
     this.charger();

@@ -1,145 +1,159 @@
-<!-- HEADER PAGE -->
-<section class="page-header">
+<!-- EN-TÊTE -->
+<section class="entete entete--chevauche">
   <div class="container">
-    <span class="badge">Parlons de votre projet</span>
-    <h1 class="page-header__titre">Nous contacter</h1>
-    <p class="page-header__sous-titre">
-      Une question, un projet d'investissement ? Notre équipe vous répond dans les plus brefs délais.
+    <span class="entete__surtitre">Contact</span>
+    <h1 class="entete__titre">Parlons de <em>votre projet</em></h1>
+    <p class="entete__texte">
+      Un bien vous intéresse, une question sur le domaine, un projet d'investissement ?
+      Écrivez-nous, où que vous viviez.
     </p>
   </div>
 </section>
 
-<!-- CONTENU -->
-<section class="section">
-  <div class="container contact__inner">
+<section class="contact">
+  <div class="container contact__grille">
 
-    <!-- INFOS -->
-    <div class="contact__infos">
-      <h2 class="contact__infos-titre">Informations</h2>
+    <!-- PANNEAU INFOS -->
+    <aside class="panneau">
+      <h2>Nous joindre</h2>
 
-      <div class="info-card">
-        <span class="info-card__icone">📍</span>
-        <div>
-          <strong>Localisation</strong>
-          <p>Abidjan, Côte d'Ivoire</p>
-        </div>
+      <ul class="coordonnees">
+        <li>
+          <span class="coordonnees__icone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <div><span>Localisation</span>{{ coordonnees.localisation }}</div>
+        </li>
+        @if (coordonnees.email) {
+          <li>
+            <span class="coordonnees__icone">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            </span>
+            <div><span>Email</span><a [href]="'mailto:' + coordonnees.email">{{ coordonnees.email }}</a></div>
+          </li>
+        }
+        @if (coordonnees.telephone) {
+          <li>
+            <span class="coordonnees__icone">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+            </span>
+            <div><span>Téléphone</span><a [href]="'tel:' + coordonnees.telephone">{{ coordonnees.telephone }}</a></div>
+          </li>
+        }
+        @if (coordonnees.whatsapp) {
+          <li>
+            <span class="coordonnees__icone">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+            </span>
+            <div><span>WhatsApp</span><a [href]="lienWhatsapp" target="_blank" rel="noopener">{{ coordonnees.whatsapp }}</a></div>
+          </li>
+        }
+        <li>
+          <span class="coordonnees__icone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </span>
+          <div><span>Diaspora</span>Nous répondons aussi aux demandes depuis l'étranger.</div>
+        </li>
+      </ul>
+
+      <div class="etapes">
+        <h3>Comment ça se passe</h3>
+        <ol>
+          <li><strong>Vous nous écrivez</strong> via le formulaire.</li>
+          <li><strong>Nous revenons vers vous</strong> par email ou par téléphone.</li>
+          <li><strong>Nous échangeons</strong> sur votre projet et les biens qui vous correspondent.</li>
+        </ol>
       </div>
-
-      <div class="info-card">
-        <span class="info-card__icone">✉️</span>
-        <div>
-          <strong>Email</strong>
-          <p>contact&#64;immoabidjan.com</p>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <span class="info-card__icone">⏱️</span>
-        <div>
-          <strong>Délai de réponse</strong>
-          <p>Sous 48h ouvrées</p>
-        </div>
-      </div>
-
-      <div class="info-card">
-        <span class="info-card__icone">🌍</span>
-        <div>
-          <strong>Diaspora bienvenue</strong>
-          <p>Nous répondons aux investisseurs du monde entier</p>
-        </div>
-      </div>
-    </div>
+    </aside>
 
     <!-- FORMULAIRE -->
-    <div class="contact__form-wrap">
-
+    <div class="carte-form">
       @if (envoi === 'succes') {
-        <div class="alerte alerte--succes">
-          ✅ Votre message a bien été envoyé ! Nous vous répondrons sous 48h.
-        </div>
-      }
-
-      @if (envoi === 'erreur') {
-        <div class="alerte alerte--erreur">
-          ❌ Une erreur est survenue. Veuillez réessayer ou nous contacter par email.
-        </div>
-      }
-
-      <form [formGroup]="form" (ngSubmit)="soumettre()" class="form">
-
-        <div class="form__ligne">
-          <div class="form__groupe" [class.erreur]="estInvalide('nom')">
-            <label>Nom *</label>
-            <input type="text" formControlName="nom" placeholder="Votre nom">
-            @if (estInvalide('nom')) {
-              <span class="form__erreur">Le nom est requis</span>
-            }
-          </div>
-          <div class="form__groupe" [class.erreur]="estInvalide('prenom')">
-            <label>Prénom *</label>
-            <input type="text" formControlName="prenom" placeholder="Votre prénom">
-            @if (estInvalide('prenom')) {
-              <span class="form__erreur">Le prénom est requis</span>
-            }
+        <div class="confirmation">
+          <span class="confirmation__icone">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
+          <h2>Message envoyé</h2>
+          <p>Merci ! Votre demande a bien été transmise à l'équipe SCI-AGD. Nous revenons vers vous rapidement.</p>
+          <div class="confirmation__actions">
+            <a routerLink="/acheter-louer" class="bouton bouton--plein">Voir les biens</a>
+            <button type="button" class="bouton" (click)="nouveauMessage()">Envoyer un autre message</button>
           </div>
         </div>
+      } @else {
+        <h2>Envoyez-nous un message</h2>
+        <p class="carte-form__intro">Les champs marqués d'un * sont obligatoires.</p>
 
-        <div class="form__ligne">
-          <div class="form__groupe" [class.erreur]="estInvalide('email')">
-            <label>Email *</label>
-            <input type="email" formControlName="email" placeholder="votre&#64;email.com">
-            @if (estInvalide('email')) {
-              <span class="form__erreur">Email invalide</span>
-            }
+        @if (bienConcerne) {
+          <div class="bien-concerne">
+            Votre demande concerne : <a [routerLink]="['/acheter-louer', bienConcerne.id]">{{ bienConcerne.titre }}</a>
           </div>
-          <div class="form__groupe">
-            <label>Téléphone</label>
-            <input type="tel" formControlName="telephone" placeholder="+33 6 00 00 00 00">
-          </div>
-        </div>
+        }
 
-        <div class="form__ligne">
-          <div class="form__groupe" [class.erreur]="estInvalide('paysResidence')">
-            <label>Pays de résidence *</label>
-            <input type="text" formControlName="paysResidence" placeholder="France, Canada...">
-            @if (estInvalide('paysResidence')) {
-              <span class="form__erreur">Le pays est requis</span>
-            }
-          </div>
-          <div class="form__groupe" [class.erreur]="estInvalide('sujet')">
-            <label>Sujet *</label>
-            <select formControlName="sujet">
-              <option value="">Choisir un sujet</option>
-              <option value="achat">Achat d'un bien</option>
-              <option value="location">Location d'un bien</option>
-              <option value="investissement">Investissement</option>
-              <option value="information">Demande d'information</option>
-              <option value="autre">Autre</option>
-            </select>
+        @if (envoi === 'erreur') {
+          <div class="alerte">L'envoi a échoué. Vérifiez votre connexion et réessayez.</div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="soumettre()" class="form">
+          <fieldset class="form__groupe" [class.erreur]="estInvalide('sujet')">
+            <legend>Votre demande concerne *</legend>
+            <div class="puces">
+              @for (s of sujets; track s.valeur) {
+                <button type="button" class="puce" [class.puce--active]="form.value.sujet === s.valeur" (click)="choisirSujet(s.valeur)">
+                  {{ s.label }}
+                </button>
+              }
+            </div>
             @if (estInvalide('sujet')) {
-              <span class="form__erreur">Veuillez choisir un sujet</span>
+              <span class="form__erreur">Choisissez un sujet</span>
             }
+          </fieldset>
+
+          <div class="form__ligne">
+            <div class="form__groupe" [class.erreur]="estInvalide('prenom')">
+              <label for="prenom">Prénom *</label>
+              <input id="prenom" type="text" formControlName="prenom" autocomplete="given-name">
+              @if (estInvalide('prenom')) { <span class="form__erreur">Prénom requis</span> }
+            </div>
+            <div class="form__groupe" [class.erreur]="estInvalide('nom')">
+              <label for="nom">Nom *</label>
+              <input id="nom" type="text" formControlName="nom" autocomplete="family-name">
+              @if (estInvalide('nom')) { <span class="form__erreur">Nom requis</span> }
+            </div>
           </div>
-        </div>
 
-        <div class="form__groupe" [class.erreur]="estInvalide('message')">
-          <label>Message *</label>
-          <textarea formControlName="message" rows="5" placeholder="Décrivez votre projet ou votre question..."></textarea>
-          @if (estInvalide('message')) {
-            <span class="form__erreur">Message trop court (20 caractères minimum)</span>
-          }
-        </div>
+          <div class="form__ligne">
+            <div class="form__groupe" [class.erreur]="estInvalide('email')">
+              <label for="email">Email *</label>
+              <input id="email" type="email" formControlName="email" autocomplete="email" placeholder="vous&#64;exemple.com">
+              @if (estInvalide('email')) { <span class="form__erreur">Email invalide</span> }
+            </div>
+            <div class="form__groupe">
+              <label for="telephone">Téléphone / WhatsApp</label>
+              <input id="telephone" type="tel" formControlName="telephone" autocomplete="tel" placeholder="+225 ...">
+            </div>
+          </div>
 
-        <button type="submit" class="btn-primary form__submit" [disabled]="envoi === 'loading'">
-          @if (envoi === 'loading') {
-            Envoi en cours...
-          } @else {
-            Envoyer le message ✉️
-          }
-        </button>
+          <div class="form__groupe" [class.erreur]="estInvalide('paysResidence')">
+            <label for="pays">Pays de résidence *</label>
+            <input id="pays" type="text" formControlName="paysResidence" list="pays-liste" autocomplete="country-name">
+            <datalist id="pays-liste">
+              @for (p of pays; track p) { <option [value]="p"></option> }
+            </datalist>
+            @if (estInvalide('paysResidence')) { <span class="form__erreur">Pays requis</span> }
+          </div>
 
-      </form>
+          <div class="form__groupe" [class.erreur]="estInvalide('message')">
+            <label for="message">Message *</label>
+            <textarea id="message" formControlName="message" rows="5" placeholder="Décrivez votre projet ou votre question..."></textarea>
+            @if (estInvalide('message')) { <span class="form__erreur">Au moins 20 caractères</span> }
+          </div>
+
+          <button type="submit" class="bouton bouton--plein form__envoyer" [disabled]="envoi === 'loading'">
+            {{ envoi === 'loading' ? 'Envoi en cours...' : 'Envoyer le message' }}
+          </button>
+        </form>
+      }
     </div>
-
   </div>
 </section>

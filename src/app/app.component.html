@@ -1,5 +1,10 @@
-<app-navbar></app-navbar>
+@if (!estAdmin()) {
+  <app-navbar></app-navbar>
+}
 <main>
   <router-outlet></router-outlet>
 </main>
-<app-footer></app-footer>
+@if (!estAdmin()) {
+  <app-footer></app-footer>
+  <app-bandeau-demo></app-bandeau-demo>
+}
