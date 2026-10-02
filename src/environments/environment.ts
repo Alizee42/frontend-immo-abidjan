@@ -1,4 +1,5 @@
-// Configuration de production (build Netlify) : API sur le VPS IONOS.
+// Configuration de production (build Netlify).
+// L'API passe par le relais Netlify (voir netlify.toml), qui la transmet au VPS IONOS.
 export const environment = {
-  apiUrl: 'https://217-160-69-180.sslip.io/api',
+  apiUrl: 'https://immo-abidjan.netlify.app/api',
 };
