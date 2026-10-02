@@ -1,5 +1,4 @@
-// Configuration de production (build Netlify).
-// Remplacer par l'adresse HTTPS du back hébergé sur le VPS IONOS.
+// Configuration de production (build Netlify) : API sur le VPS IONOS.
 export const environment = {
-  apiUrl: 'https://api.A-REMPLACER/api',
+  apiUrl: 'https://217-160-69-180.sslip.io/api',
 };
