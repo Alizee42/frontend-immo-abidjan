@@ -13,9 +13,10 @@
 /* ===== HERO ===== */
 .hero {
   position: relative;
-  height: 70vh;
-  min-height: 520px;
-  max-height: 760px;
+  /* Hauteur minimale et non fixe : si le texte est plus haut que l'écran, le hero s'agrandit
+     au lieu de faire remonter le texte sous la navbar */
+  min-height: clamp(520px, 70vh, 760px);
+  padding-top: 130px;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -73,7 +74,7 @@
   &__contenu {
     position: relative;
     z-index: 2;
-    padding-bottom: 88px;
+    padding-bottom: clamp(56px, 10vh, 88px);
     max-width: 780px;
     margin: 0 auto;
     text-align: center;
@@ -102,7 +103,7 @@
 
   &__titre {
     font-family: var(--serif);
-    font-size: 4.4rem;
+    font-size: clamp(2.1rem, 1.2rem + 3.6vw, 4.4rem);
     font-weight: 500;
     color: var(--creme);
     line-height: 1.08;
@@ -661,7 +662,6 @@
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
-  .hero__titre { font-size: 3.2rem; }
   .chiffres-grille { grid-template-columns: repeat(2, 1fr); }
   .chiffre:nth-child(2) { border-right: none; }
   .chiffre:nth-child(3), .chiffre:nth-child(4) { border-top: 1px solid rgba(244, 241, 234, 0.08); }
@@ -673,9 +673,14 @@
 }
 
 @media (max-width: 768px) {
-  .hero { height: auto; min-height: 100vh; padding-top: 120px; }
-  .hero__titre { font-size: 2.4rem; }
+  .hero { min-height: 100svh; padding-top: 110px; }
+  .hero__contenu { padding-bottom: 72px; }
+  .hero__eyebrow { margin-bottom: 20px; }
+  .hero__titre { margin-bottom: 20px; }
+  .hero__accroche { font-size: 1rem; margin-bottom: 32px; }
   .hero__scroll { display: none; }
+  /* Les traits du diaporama passent en bas : en haut ils seraient sous la navbar */
+  .hero__dots { top: auto; bottom: 28px; right: 50%; transform: translateX(50%); }
   .chiffres-grille { grid-template-columns: repeat(2, 1fr); }
   .chapitre { padding: 72px 0; }
   .chapitre__titre { font-size: 2.1rem; }
@@ -686,4 +691,31 @@
   .vedette__grille, .a-venir__grille { grid-template-columns: 1fr; }
   .cta-final { padding: 80px 0; }
   .cta-final__titre { font-size: 1.9rem; }
+}
+
+@media (max-width: 480px) {
+  .hero__eyebrow { font-size: 0.7rem; letter-spacing: 1.5px; }
+  .hero__accroche { font-size: 0.95rem; line-height: 1.65; }
+  .hero__actions { flex-direction: column; align-items: stretch; }
+  .hero__btn-primary, .hero__btn-ghost { justify-content: center; }
+  .chiffres-grille { grid-template-columns: 1fr; }
+  .chiffre { border-right: none; padding: 28px 0; }
+  .chiffre:nth-child(n + 2) { border-top: 1px solid rgba(244, 241, 234, 0.08); }
+}
+
+/* Écrans peu hauts : portable, téléphone à l'horizontale */
+@media (max-height: 700px) and (min-width: 769px) {
+  .hero { min-height: 0; padding-top: 110px; }
+  .hero__titre { font-size: clamp(2.1rem, 1rem + 3vw, 3.4rem); margin-bottom: 20px; }
+  .hero__eyebrow { margin-bottom: 18px; }
+  .hero__accroche { margin-bottom: 28px; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { min-height: 0; padding-top: 96px; }
+  .hero__contenu { padding-bottom: 48px; }
+  .hero__titre { font-size: 2rem; }
+  .hero__accroche { font-size: 0.92rem; margin-bottom: 22px; }
+  .hero__scroll { display: none; }
+  .hero__dots { top: auto; bottom: 18px; right: 50%; transform: translateX(50%); }
 }

@@ -114,7 +114,8 @@
   }
 }
 
-@media (max-width: 768px) {
+/* Menu hamburger dès la tablette : entre 769 et 1024 px les liens ne tenaient plus sur une ligne */
+@media (max-width: 1024px) {
   .navbar {
     background: rgba(10, 31, 61, 0.96);
     backdrop-filter: blur(12px);
