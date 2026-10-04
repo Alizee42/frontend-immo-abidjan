@@ -1,0 +1,27 @@
+# Vérifie chaque push et pull request : tests unitaires puis build SSR.
+# Le déploiement reste fait par Netlify, qui construit le site à chaque push sur main.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-et-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Tests unitaires
+        run: npx ng test --watch=false --browsers=ChromeHeadless
+
+      - name: Build
+        run: npm run build:ssr
