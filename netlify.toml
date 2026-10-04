@@ -5,17 +5,5 @@
 [[plugins]]
   package = "@netlify/angular-runtime"
 
-# Netlify relaie l'API et les photos envoyées vers le VPS IONOS.
-# Le navigateur ne contacte que immo-abidjan.netlify.app : pas de CORS,
-# et les pare-feux qui bloquent sslip.io ne gênent plus.
-[[redirects]]
-  from = "/api/*"
-  to = "https://217-160-69-180.sslip.io/api/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/uploads/*"
-  to = "https://217-160-69-180.sslip.io/uploads/:splat"
-  status = 200
-  force = true
+# Le relais /api/* et /uploads/* vers le VPS IONOS est fait dans src/server.ts :
+# la fonction SSR d'Angular reçoit toutes les requêtes avant les [[redirects]].
